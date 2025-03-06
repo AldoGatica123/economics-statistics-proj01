@@ -1,12 +1,13 @@
 ---
 title: "Proyecto 1"
-author: "Aldo Gatica - Alyson Rosales"
+author: "Aldo Gatica 1288813 - Alyson Rosales 1086622"
 date: "2025-03-04"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(lmtest)
 ```
 
 ## Relación entre Gastos y Utilidad en Empresas de Estados Unidos
@@ -40,6 +41,8 @@ dataset <- read.csv("Empresas.csv")
 head(dataset)
 ```
 
+El dataset contiene información sobre la utilidad y los gastos en Investigación y Desarrollo, Administración y Marketing de varias empresas en Estados Unidos. Las cantidades están expresadas en dólares. 
+
 ```{r echo=FALSE} 
 utilidad <- dataset$Utilidades
 
@@ -58,17 +61,14 @@ summary(dataset)
 
 Los valores de utilidad y gastos en el dataset ya se encuentran en miles de dólares, por lo que no es necesario realizar una transformación adicional.
 
-
-
-
-
-
-
-
-
-
-
-
+### Visualización de Datos
+```{r}
+par(mfrow=c(2,2))
+hist(utilidad, main="Distribución de Utilidad", xlab="Utilidad (Miles de dólares)", col="lightblue")
+hist(inves, main="Distribución de Gastos en I+D", xlab="Gastos en I+D (Miles de dólares)", col="lightgreen")
+hist(admin, main="Distribución de Gastos en Administración", xlab="Gastos en Administración (Miles de dólares)", col="lightcoral")
+hist(marketing, main="Distribución de Gastos en Marketing", xlab="Gastos en Marketing (Miles de dólares)", col="lightyellow")
+```
 
 
 ### Desarrollo del modelo
@@ -94,16 +94,44 @@ Los valores de R² son de 0.95 de modo que sí explica la variabilidad de la uti
 
 **UTILIDAD = 46980 + 0.7966(INVESTIGACION) + 0.02991(MARKETING)**
 
-
 ### Análisis de Residuales
 
 ```{r}
 rlm_u <- residuals(modelo)
+par(mfrow=c(1,2))
 plot(utilidad,rlm_u, pch=16, col="red")
 abline(h=0, col="blue")
 hist(rlm_u)
-summary(modelo)
 ```
+
+El grafico de dispersión de los residuales no sigue un patrón, lo que sugiere que no hay heterocedasticidad. 
+
+El histograma de los residuales muestra una distribución normal.
+
+```{r}
+bptest(modelo)
+```
+
+Los resultados de la prueba Breusch-Pagan indican con un p-value de 0.2413 que no hay heterocedasticidad en el modelo.
+
+```{r}
+shapiro.test(rlm_u)
+```
+
+Los resultados de la prueba Shapiro-Wilk indican que los residuales siguen una distribución normal, ya que el p-value es de 0.01042. 
+
+```{r}
+qqnorm(rlm_u, pch = 16, col = "blue")
+qqline(rlm_u, col = "red")
+```
+
+El gráfico QQ muestra que los residuales siguen una distribución normal, ya que siguen la línea recta.
+
+
+
+
+
+
 
 
 
@@ -151,7 +179,6 @@ Administración: El p-valor es 0.602, que es muy superior a 0.05. Esto sugiere q
 Marketing: El p-valor es 0.105, que, aunque es menor que el de administración, sigue siendo mayor que 0.05. Esto indica que el gasto en marketing no es estadísticamente significativo en este modelo.
 
 En resumen, en el modelo de prueba, solo la variable de Investigación es significativa, mientras que Administración y Marketing no aportan información relevante para predecir la utilidad.
-=======
 
 
 ### Análisis de residuales
