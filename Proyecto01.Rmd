@@ -106,6 +106,38 @@ hist(rlm_u)
 summary(modelo)
 ```
 
+Interpretación de los Resultados:
+
+1. Modelo de Prueba (con las tres variables):
+
+Investigación (R&D Spend): El p-valor es extremadamente pequeño (2 × 10⁻¹⁶), lo que indica que esta variable es altamente significativa para predecir la utilidad. Esto significa que el gasto en investigación tiene un impacto fuerte y estadísticamente significativo en las ganancias.
+
+Administración: El p-valor es 0.602, que es muy superior a 0.05. Esto sugiere que esta variable no es significativa para el modelo y no contribuye de manera relevante a predecir la utilidad.
+
+Marketing: El p-valor es 0.105, que, aunque es menor que el de administración, sigue siendo mayor que 0.05. Esto indica que el gasto en marketing no es estadísticamente significativo en este modelo.
+
+En resumen, en el modelo de prueba, solo la variable de Investigación es significativa, mientras que Administración y Marketing no aportan información relevante para predecir la utilidad.
 
 
+2. Modelo Oficial (con Investigación y Marketing):
 
+Investigación (R&D Spend): El p-valor sigue siendo extremadamente pequeño (2 × 10⁻¹⁶), confirmando que esta variable es altamente significativa.
+
+Marketing: El p-valor es 0.105, que sigue siendo mayor que 0.05, lo que indica que esta variable no es estadísticamente significativa en este modelo.
+
+Aunque el p-valor de Marketing no es significativo, decidieron incluirlo en el modelo oficial porque su valor (0.105) está más cerca del umbral de 0.05 en comparación con el p-valor de Administración (0.602). Esto sugiere que, aunque no es significativo, el gasto en marketing podría tener un impacto marginal en la utilidad.
+
+¿Por qué es mejor elegir el segundo modelo?
+Simplificación del Modelo:
+
+El segundo modelo elimina la variable de Administración, que claramente no es significativa (p-valor = 0.602). Esto simplifica el modelo sin perder capacidad predictiva, ya que esta variable no aporta información útil.
+
+Enfoque en Variables Relevantes:
+
+Al incluir solo Investigación y Marketing, el modelo se centra en las variables que tienen un impacto potencial en la utilidad. Aunque Marketing no es significativo en este caso, su p-valor más cercano a 0.05 sugiere que podría ser relevante en futuros análisis o con más datos.
+
+Mejora de la Interpretabilidad:
+
+Un modelo con menos variables es más fácil de interpretar y explicar. En este caso, el segundo modelo es más claro y directo, ya que se enfoca en las variables que tienen una relación más fuerte con la utilidad.
+
+En resumen, el segundo modelo es preferible porque es más simple, se centra en las variables relevantes y mejora la interpretación de los resultados.
