@@ -1,0 +1,41 @@
+---
+title: "Proyecto01"
+author: "Aldo Gatica"
+date: "2025-03-04"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Proyecto 01
+
+## Introducción
+
+Se tiene un dataset con información de 50 empresas sobre sus gastos en investigación y desarrollo, administración y marketing, y sus utilidades Se desea determinar si existe una relación entre los gastos y los ingresos de las empresas.
+
+
+```{r}
+# Carga de datos
+dataset <- read.csv("Empresas.csv")
+head(dataset)
+
+utilidad <- dataset$Utilidades
+
+inves <- dataset$Investigacion_y_Desarrollo
+admin <- dataset$Administracion
+marketing <- dataset$Marketing
+```
+
+### Modelo
+
+```{r} 
+modelo <- lm(utilidad ~ inves + marketing, data = dataset)
+summary(modelo)
+```
+
+
+
+
+
