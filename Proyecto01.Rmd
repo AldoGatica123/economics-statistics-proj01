@@ -1,6 +1,6 @@
 ---
-title: "Proyecto01"
-author: "Aldo Gatica"
+title: "Proyecto 1"
+author: "Aldo Gatica - Alyson Rosales"
 date: "2025-03-04"
 output: html_document
 ---
@@ -9,59 +9,124 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Proyecto 01
+## Relación entre Gastos y Utilidad en Empresas de Estados Unidos
 
-## Introducción
+### Utilidad:
+La utilidad es una métrica financiera clave que refleja la rentabilidad de una empresa. Se calcula como la diferencia entre los ingresos totales y los costos totales, incluyendo los gastos operativos, administrativos y de marketing. Maximizar la utilidad es uno de los principales objetivos de cualquier empresa, ya que permite reinvertir en el negocio, retribuir a los accionistas y garantizar la sostenibilidad a largo plazo.
 
-Se tiene un dataset con información de 50 empresas sobre sus gastos en investigación y desarrollo, administración y marketing, y sus utilidades Se desea determinar si existe una relación entre los gastos y los ingresos de las empresas.
 
-Este conjunto de datos fue obtenido de un curso de Udemy sobre R para Ciencia de Datos, específicamente diseñado con fines educativos para demostrar el modelado de regresión lineal múltiple. El conjunto de datos incluye variables como Gasto en I+D, Administración, Gasto en Marketing y Beneficios, que son comúnmente utilizadas en análisis de negocios para estudiar la relación entre los gastos y la rentabilidad.
-
-1. Gastos de Investigación y Desarrollo:
-
+### Gastos de Investigación y Desarrollo:
 Los gastos de Investigación y Desarrollo (I+D) representan las inversiones que una empresa realiza en actividades destinadas a la innovación, creación de nuevos productos, mejora de procesos y desarrollo de tecnologías. Estas actividades son fundamentales para mantener la competitividad en mercados dinámicos y en constante evolución.
 
-Relación con la Utilidad:
+**Relación con la Utilidad:**
 En muchos sectores, especialmente en industrias tecnológicas, farmacéuticas y manufactureras, los gastos en I+D están directamente relacionados con la capacidad de una empresa para generar nuevos productos o mejorar los existentes, lo que puede traducirse en mayores ingresos y, por ende, en una mayor utilidad. Estudios empíricos han demostrado que las empresas que invierten más en I+D tienden a tener un mejor desempeño financiero a largo plazo.
 
-En el Modelo:
-En tu análisis, el gasto en I+D mostró un p-valor extremadamente bajo (2 × 10⁻¹⁶), lo que confirma que esta variable es altamente significativa para predecir la utilidad. Esto sugiere que las inversiones en I+D tienen un impacto fuerte y positivo en las ganancias de la empresa.
-
-2. Gastos de Administración:
-
+### Gastos de Administración:
 Los gastos de Administración incluyen los costos asociados con la gestión y operación general de la empresa, como salarios del personal administrativo, gastos de oficina, servicios públicos y otros costos operativos. Estos gastos son necesarios para mantener la estructura organizacional y garantizar el funcionamiento eficiente de la empresa.
 
-Relación con la Utilidad:
+**Relación con la Utilidad:**
 Aunque los gastos de administración son esenciales para el funcionamiento diario de una empresa, no siempre están directamente relacionados con la generación de ingresos. En muchos casos, estos gastos se consideran costos fijos que no varían significativamente con el nivel de producción o ventas. Por lo tanto, su impacto en la utilidad puede ser menos evidente en comparación con otros gastos más estratégicos, como los de I+D o marketing.
 
-En el Modelo:
-En tu análisis, el gasto en administración mostró un p-valor de 0.602, lo que indica que esta variable no es estadísticamente significativa para predecir la utilidad. Esto sugiere que, en este contexto, los gastos administrativos no tienen un impacto significativo en las ganancias de la empresa.
 
-3. Gastos de Marketing:
-
+### Gastos de Marketing:
 Los gastos de Marketing incluyen las inversiones en publicidad, promociones, relaciones públicas y otras actividades destinadas a aumentar la visibilidad de la empresa, atraer clientes y fomentar las ventas. El marketing es una herramienta clave para diferenciar productos y servicios en mercados competitivos.
 
-Relación con la Utilidad:
+**Relación con la Utilidad:**
 El marketing puede tener un impacto directo en las ventas y, por lo tanto, en la utilidad. Sin embargo, su efectividad depende de factores como la estrategia utilizada, el mercado objetivo y la competencia. En algunos casos, los gastos en marketing pueden no traducirse inmediatamente en mayores ganancias, especialmente si las campañas no están bien dirigidas o si el mercado está saturado.
 
-En el Modelo:
-En tu análisis, el gasto en marketing mostró un p-valor de 0.105, que, aunque no es estadísticamente significativo (p > 0.05), está relativamente cerca del umbral de significancia. Esto sugiere que el marketing podría tener un impacto marginal en la utilidad, pero no lo suficientemente fuerte como para ser considerado significativo en este modelo.
+```{r}
+# Carga de datos
+dataset <- read.csv("Empresas.csv")
+head(dataset)
+```
 
-4. Utilidad (Variable Dependiente):
+```{r echo=FALSE} 
+utilidad <- dataset$Utilidades
 
-La Utilidad (o beneficio) es una métrica financiera clave que refleja la rentabilidad de una empresa. Se calcula como la diferencia entre los ingresos totales y los costos totales, incluyendo los gastos operativos, administrativos y de marketing. Maximizar la utilidad es uno de los principales objetivos de cualquier empresa, ya que permite reinvertir en el negocio, retribuir a los accionistas y garantizar la sostenibilidad a largo plazo.
+inves <- dataset$Investigacion_y_Desarrollo
+admin <- dataset$Administracion
+marketing <- dataset$Marketing
+```
 
-Relación con las Variables Independientes:
-En tu modelo, la utilidad se explica en función de los gastos en I+D, administración y marketing. La regresión lineal múltiple permite cuantificar el impacto de cada uno de estos gastos en la utilidad, lo que proporciona información valiosa para la toma de decisiones estratégicas.
+## Análisis Exploratorio de Datos
+
+Las variables de interés en este análisis son la utilidad y los gastos en Investigación y Desarrollo (I+D), Administración y Marketing. A continuación, se presentan algunas estadísticas descriptivas y visualizaciones para comprender mejor la distribución y relación entre estas variables.
+
+```{r}
+summary(dataset)
+```
+
+Los valores de utilidad y gastos en el dataset ya se encuentran en miles de dólares, por lo que no es necesario realizar una transformación adicional.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Desarrollo del modelo
+
+El modelo de regresión lineal múltiple pretende predecir la utilidad en función de los gastos en I+D, administración y marketing. A continuación, se presenta el modelo inicial con las tres variables y el modelo final con las variables más significativas.
+
+```{r}
+### Modelo inicial con las tres variables
+modeloprueba <- lm(utilidad ~ inves + admin + marketing, data = dataset)
+summary(modeloprueba)
+
+### Modelo final con dos variables
+modelo <- lm(utilidad ~ inves + marketing, data = dataset)
+summary(modelo)
+```
+
+Se decidió utilizar el modelo con las variables I+D y Marketing, ya que la variable de administración tiene un p-value de 0.105, haciéndola no significativa. Con el nuevo modelo sin la variable de administración, se obtiene un p-value de 0.06 en gasto de marketing, resulta que es más significativo que el modelo con las tres variables.
+
+Los valores de R² son de 0.95 de modo que sí explica la variabilidad de la utilidad en función de los gastos en I+D y Marketing.
+
+
+### Modelo de Regresión Lineal
+
+**UTILIDAD = 46980 + 0.7966(INVESTIGACION) + 0.02991(MARKETING)**
+
+
+### Análisis de Residuales
+
+```{r}
+rlm_u <- residuals(modelo)
+plot(utilidad,rlm_u, pch=16, col="red")
+abline(h=0, col="blue")
+hist(rlm_u)
+summary(modelo)
+```
+
+
+
+**I+D**
+El gasto en I+D mostró un p-valor extremadamente bajo (2 × 10⁻¹⁶), lo que confirma que esta variable es altamente significativa para predecir la utilidad. Esto sugiere que las inversiones en I+D tienen un impacto fuerte y positivo en las ganancias de la empresa.
+
+
+**Administración:**
+En tu análisis, el gasto en administración mostró un p-valor de 0.602, lo que indica que esta variable no es estadísticamente significativa para predecir la utilidad. Esto sugiere que, en este contexto, los gastos administrativos no tienen un impacto significativo en las ganancias de la empresa.
+
+**Marketing:**
+El gasto en marketing mostró un p-valor de 0.105., aunque no es estadísticamente significativo (p > 0.05), está relativamente cerca del umbral de significancia. Esto sugiere que el marketing podría tener un impacto marginal en la utilidad, pero no lo suficientemente fuerte como para ser considerado significativo en este modelo.
+
+
+**Relación con las Variables Independientes:**
+La utilidad se explica en función de los gastos en I+D, administración y marketing. La regresión lineal múltiple permite cuantificar el impacto de cada uno de estos gastos en la utilidad, lo que proporciona información valiosa para la toma de decisiones estratégicas.
 
 5. Interpretación del Modelo:
 
-El modelo de regresión lineal múltiple que construiste tiene como objetivo predecir la utilidad en función de los gastos en I+D, administración y marketing. Los resultados del modelo indican que:
+El modelo de regresión lineal múltiple tiene como objetivo predecir la utilidad en función de los gastos en I+D, administración y marketing. Los resultados del modelo indican que:
 
 Gastos en I+D: Son el factor más importante para predecir la utilidad, con un impacto altamente significativo.
-
 Gastos en Administración: No tienen un impacto significativo en la utilidad, lo que sugiere que estos gastos son más bien costos fijos que no varían con el desempeño financiero.
-
 Gastos en Marketing: Aunque no son estadísticamente significativos en este modelo, su p-valor cercano a 0.05 sugiere que podrían tener un impacto marginal en la utilidad.
 
 6. Relevancia Empresarial:
@@ -75,37 +140,6 @@ Control de Gastos Administrativos: Dado que los gastos administrativos no tienen
 Estrategias de Marketing: Aunque el marketing no fue significativo en este modelo, su impacto marginal sugiere que las empresas podrían beneficiarse de estrategias de marketing más efectivas o mejor dirigidas.
 
 
-
-```{r}
-# Carga de datos
-dataset <- read.csv("Empresas.csv")
-head(dataset)
-
-utilidad <- dataset$Utilidades
-
-inves <- dataset$Investigacion_y_Desarrollo
-admin <- dataset$Administracion
-marketing <- dataset$Marketing
-```
-
-### Modelo
-
-```{r}
-modeloprueba <- lm(utilidad ~ inves + admin + marketing, data = dataset)
-modelo <- lm(utilidad ~ inves + marketing, data = dataset)
-summary(modeloprueba)
-summary(modelo)
-```
-Texto
-
-```{r}
-rlm_u <- residuals(modelo)
-plot(utilidad,rlm_u, pch=16, col="red")
-abline(h=0, col="blue")
-hist(rlm_u)
-summary(modelo)
-```
-
 Interpretación de los Resultados:
 
 1. Modelo de Prueba (con las tres variables):
@@ -117,6 +151,20 @@ Administración: El p-valor es 0.602, que es muy superior a 0.05. Esto sugiere q
 Marketing: El p-valor es 0.105, que, aunque es menor que el de administración, sigue siendo mayor que 0.05. Esto indica que el gasto en marketing no es estadísticamente significativo en este modelo.
 
 En resumen, en el modelo de prueba, solo la variable de Investigación es significativa, mientras que Administración y Marketing no aportan información relevante para predecir la utilidad.
+=======
+
+
+### Análisis de residuales
+
+```{r}
+residuales <- residuals(modelo)
+
+par(mfrow=c(1,2))
+
+plot(utilidad,residuales, pch=16, col="red")
+abline(h=0, col="blue")
+hist(residuales)
+```
 
 
 2. Modelo Oficial (con Investigación y Marketing):
@@ -141,3 +189,11 @@ Mejora de la Interpretabilidad:
 Un modelo con menos variables es más fácil de interpretar y explicar. En este caso, el segundo modelo es más claro y directo, ya que se enfoca en las variables que tienen una relación más fuerte con la utilidad.
 
 En resumen, el segundo modelo es preferible porque es más simple, se centra en las variables relevantes y mejora la interpretación de los resultados.
+
+
+
+# Bibliografía
+
+- Udemy. (n.d.). Machine Learning A-Z: AI, Python & R[2025]. Retrieved from [https://www.udemy.com/course/machinelearning].
+- 
+
