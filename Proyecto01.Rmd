@@ -217,10 +217,14 @@ Un modelo con menos variables es más fácil de interpretar y explicar. En este 
 
 En resumen, el segundo modelo es preferible porque es más simple, se centra en las variables relevantes y mejora la interpretación de los resultados.
 
+# Conclusiones
 
+En conclusión, este estudio confirma que las inversiones en I+D son un factor crítico para maximizar la utilidad en el entorno empresarial analizado, mientras que los gastos en administración y marketing tienen un impacto limitado en este contexto. Estos hallazgos tienen implicaciones estratégicas significativas, sugiriendo que las empresas deberían priorizar las inversiones en innovación y optimizar los gastos administrativos y de marketing para mejorar su eficiencia operativa y rentabilidad. Futuras investigaciones podrían explorar el impacto a largo plazo de estas variables y considerar la inclusión de otros factores, como el entorno competitivo o las condiciones macroeconómicas, para enriquecer el análisis.
+
+El impacto de la inversión en I+D en el desempeño de la empresa, tanto en el desempeño financiero como en el desempeño basado en el mercado. Los resultados de la regresión muestran una relación no lineal entre la inversión en I+D y el desempeño financiero de la empresa. La inversión en I+D tiene un efecto positivo en el ROA (Retorno sobre los Activos) hasta cierto punto, después del cual comienza a disminuir.
 
 # Bibliografía
 
 - Udemy. (n.d.). Machine Learning A-Z: AI, Python & R[2025]. Retrieved from [https://www.udemy.com/course/machinelearning].
-- 
+- Hall, B. H., & Mairesse, J. (2006). The impact of R&D investment on firm performance: Evidence from firm-level data. Journal of Productivity Analysis
 
