@@ -64,10 +64,10 @@ Los valores de utilidad y gastos en el dataset ya se encuentran en miles de dól
 ### Visualización de Datos
 ```{r}
 par(mfrow=c(2,2))
-hist(utilidad, main="Distribución de Utilidad", xlab="Utilidad (Miles de dólares)", col="lightblue")
-hist(inves, main="Distribución de Gastos en I+D", xlab="Gastos en I+D (Miles de dólares)", col="lightgreen")
-hist(admin, main="Distribución de Gastos en Administración", xlab="Gastos en Administración (Miles de dólares)", col="lightcoral")
-hist(marketing, main="Distribución de Gastos en Marketing", xlab="Gastos en Marketing (Miles de dólares)", col="lightyellow")
+hist(utilidad, main="Distribución de Utilidad", xlab="Utilidad (Dólares)", col="lightblue")
+hist(inves, main="Distribución de Gastos en I+D", xlab="Gastos en I+D (Dólares)", col="lightgreen")
+hist(admin, main="Distribución de Gastos en Administración", xlab="Gastos en Administración (Dólares)", col="lightcoral")
+hist(marketing, main="Distribución de Gastos en Marketing", xlab="Gastos en Marketing (Dólares)", col="lightyellow")
 ```
 
 
@@ -89,6 +89,8 @@ Se decidió utilizar el modelo con las variables I+D y Marketing, ya que la vari
 
 Los valores de R² son de 0.95 de modo que sí explica la variabilidad de la utilidad en función de los gastos en I+D y Marketing.
 
+- Investigación (R&D Spend): El p-valor es de 2×10⁻¹⁶, confirmando que esta variable es altamente significativa.
+- Marketing: El p-valor es 0.06, lo que indica que esta variable no es estadísticamente significativa en este modelo.
 
 ### Modelo de Regresión Lineal
 
@@ -104,7 +106,7 @@ abline(h=0, col="blue")
 hist(rlm_u)
 ```
 
-El grafico de dispersión de los residuales no sigue un patrón, lo que sugiere que no hay heterocedasticidad. 
+El gráfico de dispersión de los residuales no sigue un patrón, lo que sugiere que no hay heterocedasticidad. 
 
 El histograma de los residuales muestra una distribución normal.
 
@@ -127,99 +129,9 @@ qqline(rlm_u, col = "red")
 
 El gráfico QQ muestra que los residuales siguen una distribución normal, ya que siguen la línea recta.
 
-
-
-
-
-
-
-
-
-**I+D**
-El gasto en I+D mostró un p-valor extremadamente bajo (2 × 10⁻¹⁶), lo que confirma que esta variable es altamente significativa para predecir la utilidad. Esto sugiere que las inversiones en I+D tienen un impacto fuerte y positivo en las ganancias de la empresa.
-
-
-**Administración:**
-En tu análisis, el gasto en administración mostró un p-valor de 0.602, lo que indica que esta variable no es estadísticamente significativa para predecir la utilidad. Esto sugiere que, en este contexto, los gastos administrativos no tienen un impacto significativo en las ganancias de la empresa.
-
-**Marketing:**
-El gasto en marketing mostró un p-valor de 0.105., aunque no es estadísticamente significativo (p > 0.05), está relativamente cerca del umbral de significancia. Esto sugiere que el marketing podría tener un impacto marginal en la utilidad, pero no lo suficientemente fuerte como para ser considerado significativo en este modelo.
-
-
-**Relación con las Variables Independientes:**
-La utilidad se explica en función de los gastos en I+D, administración y marketing. La regresión lineal múltiple permite cuantificar el impacto de cada uno de estos gastos en la utilidad, lo que proporciona información valiosa para la toma de decisiones estratégicas.
-
-5. Interpretación del Modelo:
-
-El modelo de regresión lineal múltiple tiene como objetivo predecir la utilidad en función de los gastos en I+D, administración y marketing. Los resultados del modelo indican que:
-
-Gastos en I+D: Son el factor más importante para predecir la utilidad, con un impacto altamente significativo.
-Gastos en Administración: No tienen un impacto significativo en la utilidad, lo que sugiere que estos gastos son más bien costos fijos que no varían con el desempeño financiero.
-Gastos en Marketing: Aunque no son estadísticamente significativos en este modelo, su p-valor cercano a 0.05 sugiere que podrían tener un impacto marginal en la utilidad.
-
-6. Relevancia Empresarial:
-
-Este análisis tiene importantes implicaciones para la gestión empresarial:
-
-Inversión en I+D: Los resultados respaldan la idea de que las empresas deben priorizar las inversiones en I+D para impulsar la innovación y, en consecuencia, la rentabilidad.
-
-Control de Gastos Administrativos: Dado que los gastos administrativos no tienen un impacto significativo en la utilidad, las empresas podrían considerar optimizar estos costos para mejorar su eficiencia operativa.
-
-Estrategias de Marketing: Aunque el marketing no fue significativo en este modelo, su impacto marginal sugiere que las empresas podrían beneficiarse de estrategias de marketing más efectivas o mejor dirigidas.
-
-
-Interpretación de los Resultados:
-
-1. Modelo de Prueba (con las tres variables):
-
-Investigación (R&D Spend): El p-valor es extremadamente pequeño (2 × 10⁻¹⁶), lo que indica que esta variable es altamente significativa para predecir la utilidad. Esto significa que el gasto en investigación tiene un impacto fuerte y estadísticamente significativo en las ganancias.
-
-Administración: El p-valor es 0.602, que es muy superior a 0.05. Esto sugiere que esta variable no es significativa para el modelo y no contribuye de manera relevante a predecir la utilidad.
-
-Marketing: El p-valor es 0.105, que, aunque es menor que el de administración, sigue siendo mayor que 0.05. Esto indica que el gasto en marketing no es estadísticamente significativo en este modelo.
-
-En resumen, en el modelo de prueba, solo la variable de Investigación es significativa, mientras que Administración y Marketing no aportan información relevante para predecir la utilidad.
-
-
-### Análisis de residuales
-
-```{r}
-residuales <- residuals(modelo)
-
-par(mfrow=c(1,2))
-
-plot(utilidad,residuales, pch=16, col="red")
-abline(h=0, col="blue")
-hist(residuales)
-```
-
-
-2. Modelo Oficial (con Investigación y Marketing):
-
-Investigación (R&D Spend): El p-valor sigue siendo extremadamente pequeño (2 × 10⁻¹⁶), confirmando que esta variable es altamente significativa.
-
-Marketing: El p-valor es 0.105, que sigue siendo mayor que 0.05, lo que indica que esta variable no es estadísticamente significativa en este modelo.
-
-Aunque el p-valor de Marketing no es significativo, decidieron incluirlo en el modelo oficial porque su valor (0.105) está más cerca del umbral de 0.05 en comparación con el p-valor de Administración (0.602). Esto sugiere que, aunque no es significativo, el gasto en marketing podría tener un impacto marginal en la utilidad.
-
-¿Por qué es mejor elegir el segundo modelo?
-Simplificación del Modelo:
-
-El segundo modelo elimina la variable de Administración, que claramente no es significativa (p-valor = 0.602). Esto simplifica el modelo sin perder capacidad predictiva, ya que esta variable no aporta información útil.
-
-Enfoque en Variables Relevantes:
-
-Al incluir solo Investigación y Marketing, el modelo se centra en las variables que tienen un impacto potencial en la utilidad. Aunque Marketing no es significativo en este caso, su p-valor más cercano a 0.05 sugiere que podría ser relevante en futuros análisis o con más datos.
-
-Mejora de la Interpretabilidad:
-
-Un modelo con menos variables es más fácil de interpretar y explicar. En este caso, el segundo modelo es más claro y directo, ya que se enfoca en las variables que tienen una relación más fuerte con la utilidad.
-
-En resumen, el segundo modelo es preferible porque es más simple, se centra en las variables relevantes y mejora la interpretación de los resultados.
-
 # Conclusiones
 
-En conclusión, este estudio confirma que las inversiones en I+D son un factor crítico para maximizar la utilidad en el entorno empresarial analizado, mientras que los gastos en administración y marketing tienen un impacto limitado en este contexto. Estos hallazgos tienen implicaciones estratégicas significativas, sugiriendo que las empresas deberían priorizar las inversiones en innovación y optimizar los gastos administrativos y de marketing para mejorar su eficiencia operativa y rentabilidad. Futuras investigaciones podrían explorar el impacto a largo plazo de estas variables y considerar la inclusión de otros factores, como el entorno competitivo o las condiciones macroeconómicas, para enriquecer el análisis.
+Este estudio confirma que las inversiones en I+D son un factor crítico para maximizar la utilidad en el entorno empresarial analizado, mientras que los gastos en administración y marketing tienen un impacto limitado en este contexto. Estos hallazgos tienen implicaciones estratégicas significativas, sugiriendo que las empresas deberían priorizar las inversiones en innovación y optimizar los gastos administrativos y de marketing para mejorar su eficiencia operativa y rentabilidad. Futuras investigaciones podrían explorar el impacto a largo plazo de estas variables y considerar la inclusión de otros factores, como el entorno competitivo o las condiciones macroeconómicas, para enriquecer el análisis.
 
 El impacto de la inversión en I+D en el desempeño de la empresa, tanto en el desempeño financiero como en el desempeño basado en el mercado. Los resultados de la regresión muestran una relación no lineal entre la inversión en I+D y el desempeño financiero de la empresa. La inversión en I+D tiene un efecto positivo en el ROA (Retorno sobre los Activos) hasta cierto punto, después del cual comienza a disminuir.
 
