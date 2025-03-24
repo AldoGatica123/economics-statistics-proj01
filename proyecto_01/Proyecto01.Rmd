@@ -43,20 +43,24 @@ head(dataset)
 
 El dataset contiene información sobre la utilidad y los gastos en Investigación y Desarrollo, Administración y Marketing de varias empresas en Estados Unidos. Las cantidades están expresadas en dólares. 
 
+## Análisis Exploratorio de Datos
+
+Las variables de interés en este análisis son la utilidad y los gastos en Investigación y Desarrollo (I+D), Administración y Marketing. A continuación, se presentan algunas estadísticas descriptivas y visualizaciones para comprender mejor la distribución y relación entre estas variables.
+
 ```{r echo=FALSE} 
 utilidad <- dataset$Utilidades
 
 inves <- dataset$Investigacion_y_Desarrollo
 admin <- dataset$Administracion
 marketing <- dataset$Marketing
+
+pairs(dataset[, -4])
 ```
 
-## Análisis Exploratorio de Datos
-
-Las variables de interés en este análisis son la utilidad y los gastos en Investigación y Desarrollo (I+D), Administración y Marketing. A continuación, se presentan algunas estadísticas descriptivas y visualizaciones para comprender mejor la distribución y relación entre estas variables.
+La relación entre las variables de interés se puede visualizar en la matriz de dispersión. Se observa una correlación positiva entre la utilidad y los gastos en I+D y Marketing, la relación con los gastos de administración parece ser menos significativa
 
 ```{r}
-summary(dataset)
+summary(dataset[, -4])
 ```
 
 Los valores de utilidad y gastos en el dataset ya se encuentran en miles de dólares, por lo que no es necesario realizar una transformación adicional.
