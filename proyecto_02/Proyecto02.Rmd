@@ -18,6 +18,30 @@ library(ggplot2)
   knitr::include_graphics("./Variables_P2.jpeg")
 ```
 
+# Introducción
+
+El presente proyecto tiene como objetivo realizar un análisis de factores y componentes principales a partir de un conjunto de datos de vinos. El dataset contiene 13 variables que describen las características de los vinos y una variable que indica la calidad del vino. El análisis de factores y componentes principales permitirá identificar las variables que mejor explican la variabilidad de los datos y reducir la dimensionalidad del dataset.
+
+# Marco Teórico
+
+Fundamentos del ACP aplicado a datos químicos de vinos:
+Normalización de datos: Esencial debido a las diferentes escalas de medición (por ejemplo, Alcohol en % vol vs Proline en mg/L).
+
+Matriz de correlación: El ACP revelará cómo las diferentes propiedades químicas del vino covarían entre sí.
+
+## Interpretación química:
+
+  Componentes pueden representar dimensiones subyacentes como "madurez", "extracción", o "estilo enológico"
+
+  Cargas factoriales indicarán qué parámetros analíticos contribuyen a cada dimensión
+
+## Aplicaciones en enología:
+
+  Control de calidad: Detección de vinos atípicos
+
+  Optimización de procesos: Identificación de parámetros clave
+
+  Denominaciones de origen: Caracterización química objetiva
 
 ```{r}
 # Carga de datos
@@ -32,6 +56,8 @@ head(dataset.df)
 ```{r}
 round(cor(dataset.df),2)
 ```
+
+# Analisis
 
 ## Analisis de factores
 
@@ -60,14 +86,14 @@ scree(dataset.df, factors = TRUE)
 ```
 
 
-# Analisis de componentes principales
+## Analisis de componentes principales
 
 ```{r}
 dataset.AF <- factanal(dataset.df,factors=6)
 dataset.AF
 ```
 
-## Conclusión
+## Conclusión del Analisis
 
 Aunque el gráfico de scree muestra un quiebre en el factor 4, el p-valor de este factor es de 1.444642e-05, lo que indica que no es un buen ajuste para los datos. Mientras que el factor 6 tiene un p-valor mayor a 0.05 (0.3093393). Por lo que es el factor 6 es la solución más parsimoniosa con un P-valor no significativo.
 
@@ -80,9 +106,12 @@ Aunque el gráfico de scree muestra un quiebre en el factor 4, el p-valor de est
 (dataset.AF6.promax <- factanal(dataset.df,factors=6,rotation="promax"))
 ```
 
+# Conclusiones
+
+El análisis de factores y componentes principales permitió identificar las variables que mejor explican la variabilidad de los datos y reducir la dimensionalidad del dataset. El factor 6 es la solución más parsimoniosa con un P-valor no significativo. La rotación varimax y promax permitió identificar las variables que mejor explican la variabilidad de los datos y reducir la dimensionalidad del dataset. Esto provee una base cuantitativa solida para la interpretación química de los vinos y su aplicación en enología.
 
 
-# Bibliografía
+## Bibliografía
 
 https://archive.ics.uci.edu/dataset/109/wine
 
