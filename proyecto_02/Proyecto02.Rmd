@@ -10,11 +10,24 @@ knitr::opts_chunk$set(echo = TRUE)
 library(lmtest)
 ```
 
+## Variables
+
+```{r,out,width="150", fig.align="center"}
+  knitr::include_graphics("./Variables_P2.jpeg")
+```
+
 
 ```{r}
 # Carga de datos
-data <- read.csv("Wine.csv")
-head(data)
+dataset <- read.csv("Wine.csv")
+dataset <- dataset[,-14]
+head(dataset)
+```
+
+# 
+
+```{r}
+round(cor(dataset),2)
 ```
 
 
