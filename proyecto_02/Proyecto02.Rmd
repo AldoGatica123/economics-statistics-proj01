@@ -7,7 +7,9 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(lmtest)
+library(readxl)
+library(psych)
+library(ggplot2)
 ```
 
 ## Variables
@@ -21,14 +23,55 @@ library(lmtest)
 # Carga de datos
 dataset <- read.csv("Wine.csv")
 dataset <- dataset[,-14]
-head(dataset)
+dataset.df <- data.frame(dataset)
+head(dataset.df)
 ```
 
 # 
 
 ```{r}
-round(cor(dataset),2)
+round(cor(dataset.df),2)
 ```
+
+## Analisis de factores
+
+```{r}
+dataset.AF <- factanal(dataset.df,factors=3)
+dataset.AF
+
+(dataset.AF2 <- factanal(dataset.df,factors=2))
+(dataset.AF3 <- factanal(dataset.df,factors=3))
+(dataset.AF4 <- factanal(dataset.df,factors=4))
+(dataset.AF5 <- factanal(dataset.df,factors=5))
+(dataset.AF6 <- factanal(dataset.df,factors=6))
+(dataset.AF7 <- factanal(dataset.df,factors=7))
+(dataset.AF8 <- factanal(dataset.df,factors=8))
+
+
+dataset.AF2$PVAL
+dataset.AF3$PVAL
+dataset.AF4$PVAL
+dataset.AF5$PVAL
+dataset.AF6$PVAL
+dataset.AF7$PVAL
+dataset.AF8$PVAL
+
+scree(dataset.df, factors = TRUE)
+
+
+```
+
+
+
+
+
+
+
+
+# Bibliografía
+
+https://archive.ics.uci.edu/dataset/109/wine
+
 
 
 
