@@ -1,5 +1,21 @@
 ---
-title: "Proyecto_02"
+title: "Proyecto 2"
+author: "Aldo Gatica 1288813 - Alyson Rosales 1086622"
+date: "2025-03-24"
 output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(lmtest)
+```
+
+
+```{r}
+# Carga de datos
+data <- read.csv("Wine.csv")
+head(data)
+```
+
+
 
