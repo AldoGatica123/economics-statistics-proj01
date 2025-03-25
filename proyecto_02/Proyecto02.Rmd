@@ -36,8 +36,6 @@ round(cor(dataset.df),2)
 ## Analisis de factores
 
 ```{r}
-dataset.AF <- factanal(dataset.df,factors=3)
-dataset.AF
 
 (dataset.AF2 <- factanal(dataset.df,factors=2))
 (dataset.AF3 <- factanal(dataset.df,factors=3))
@@ -62,9 +60,25 @@ scree(dataset.df, factors = TRUE)
 ```
 
 
+# Analisis de componentes principales
+
+```{r}
+dataset.AF <- factanal(dataset.df,factors=6)
+dataset.AF
+```
+
+## Conclusión
+
+Aunque el gráfico de scree muestra un quiebre en el factor 4, el p-valor de este factor es de 1.444642e-05, lo que indica que no es un buen ajuste para los datos. Mientras que el factor 6 tiene un p-valor mayor a 0.05 (0.3093393). Por lo que es el factor 6 es la solución más parsimoniosa con un P-valor no significativo.
 
 
+```{r}
+(dataset.AF6.varimax <- factanal(dataset.df,factors=6,rotation="varimax"))
+```
 
+```{r}
+(dataset.AF6.promax <- factanal(dataset.df,factors=6,rotation="promax"))
+```
 
 
 
