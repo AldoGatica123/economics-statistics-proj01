@@ -51,11 +51,13 @@ dataset.df <- data.frame(dataset)
 head(dataset.df)
 ```
 
-# 
+## Correlación de variables
 
 ```{r}
 round(cor(dataset.df),2)
 ```
+
+No hay correlaciones perfectas en el dataset, por lo que se procede a realizar el análisis de factores.
 
 # Analisis
 
@@ -82,16 +84,21 @@ dataset.AF8$PVAL
 
 scree(dataset.df, factors = TRUE)
 
-
 ```
 
-  
-  *F1 = 0.841V06 + 0.907V07 - 0.516V08 + 0.697V09 + 0.750V12
-  *F2 = 0.763V01 + 0.769V13
-  *F3 = 0.967V03 + 0.541V04
-  *F4 = 0.875V10
-  *F5 = 0.793V02 - 0.524V11
-  *F6 = 0.958V05
+
+### Determinación de cantidad de componentes
+
+Aunque el gráfico de scree muestra un quiebre en el factor 4, el p-valor de este factor es de 1.444642e-05, lo que indica que no es un buen ajuste para los datos. Mientras que el factor 6 tiene un p-valor mayor a 0.05 (0.3093393). 
+
+**De manera en que se decidió utilizar 6 factores para el análisis.**
+
+- $F1 = 0.841V06 + 0.907V07 - 0.516V08 + 0.697V09 + 0.750V12$
+- $F2 = 0.763V01 + 0.769V13$
+- $F3 = 0.967V03 + 0.541V04$
+- $F4 = 0.875V10$
+- $F5 = 0.793V02 - 0.524V11$
+- $F6 = 0.958V05$
 
 ## Analisis de componentes principales
 
@@ -100,17 +107,46 @@ dataset.AF <- factanal(dataset.df,factors=6)
 dataset.AF
 ```
 
-## Conclusión del Analisis
 
-Aunque el gráfico de scree muestra un quiebre en el factor 4, el p-valor de este factor es de 1.444642e-05, lo que indica que no es un buen ajuste para los datos. Mientras que el factor 6 tiene un p-valor mayor a 0.05 (0.3093393). Por lo que es el factor 6 es la solución más parsimoniosa con un P-valor no significativo.
-
+## Rotación de factores
 
 ```{r}
-(dataset.AF6.varimax <- factanal(dataset.df,factors=6,rotation="varimax"))
+(dataset.AF6.varimax <- factanal(dataset.df,factors=5,rotation="varimax"))
+(dataset.AF6.promax <- factanal(dataset.df,factors=5,rotation="promax"))
 ```
 
+- Los resultados de unicidad de los factores son los mismos para ambas rotaciones
+- No hay una unicidad muy alta en los factores.
+- No hay alto grado de correlación entre los factores.
+
 ```{r}
-(dataset.AF6.promax <- factanal(dataset.df,factors=6,rotation="promax"))
+# Analisis AF6.varimax
+pesos_varimax <- data.frame(L = dataset.AF6.varimax$loadings[, 1:2])
+g_varimax <- ggplot(pesos_varimax, aes(x = L.Factor1, y = L.Factor2, 
+                                      label = rownames(pesos_varimax))) +
+geom_point(size = 3, color = "blue") +
+geom_hline(yintercept = 0, colour = "red", linetype = "dashed") +
+geom_vline(xintercept = 0, colour = "red", linetype = "dashed") +
+geom_label(nudge_y = 0.05, nudge_x = 0.05, size = 3) +
+ggtitle("Análisis Factorial - Rotación Varimax (Factores 1 y 2)") +
+xlab("Factor 1") + ylab("Factor 2") +
+theme_minimal()
+
+g_varimax
+
+# Analisis AF6.promax
+pesos_promax <- data.frame(L = dataset.AF6.promax$loadings[, 1:2])
+g_promax <- ggplot(pesos_promax, aes(x = L.Factor1, y = L.Factor2, 
+                                    label = rownames(pesos_promax))) +
+geom_point(size = 3, color = "darkgreen") +
+geom_hline(yintercept = 0, colour = "red", linetype = "dashed") +
+geom_vline(xintercept = 0, colour = "red", linetype = "dashed") +
+geom_label(nudge_y = 0.05, nudge_x = 0.05, size = 3) +
+ggtitle("Análisis Factorial - Rotación Promax (Factores 1 y 2)") +
+xlab("Factor 1") + ylab("Factor 2") +
+theme_minimal()
+
+g_promax
 ```
 
 # Conclusiones
