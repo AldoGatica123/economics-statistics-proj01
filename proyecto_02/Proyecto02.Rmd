@@ -31,7 +31,7 @@ Matriz de correlación: El ACP revelará cómo las diferentes propiedades quími
 
 ## Interpretación química:
 
-  Componentes pueden representar dimensiones subyacentes como "madurez", "extracción", o "estilo enológico"
+  Componentes pueden representar dimensiones subyacentes como "cantidad de alcohol", "composición química" y otras propiedades.
 
   Cargas factoriales indicarán qué parámetros analíticos contribuyen a cada dimensión
 
@@ -111,8 +111,8 @@ dataset.AF
 ## Rotación de factores
 
 ```{r}
-(dataset.AF6.varimax <- factanal(dataset.df,factors=5,rotation="varimax"))
-(dataset.AF6.promax <- factanal(dataset.df,factors=5,rotation="promax"))
+(dataset.AF6.varimax <- factanal(dataset.df,factors=6,rotation="varimax"))
+(dataset.AF6.promax <- factanal(dataset.df,factors=6,rotation="promax"))
 ```
 
 - Los resultados de unicidad de los factores son los mismos para ambas rotaciones
@@ -151,13 +151,27 @@ g_promax
 
 # Conclusiones
 
-El análisis de factores y componentes principales permitió identificar las variables que mejor explican la variabilidad de los datos y reducir la dimensionalidad del dataset. El factor 6 es la solución más parsimoniosa con un P-valor no significativo. La rotación varimax y promax permitió identificar las variables que mejor explican la variabilidad de los datos y reducir la dimensionalidad del dataset. Esto provee una base cuantitativa solida para la interpretación química de los vinos y su aplicación en enología.
+Los componentes principales representan dimensiones como "composición química", "características organolépticas" y "propiedades físicas". Las cargas factoriales indican qué parámetros analíticos contribuyen a cada dimensión.
+
+- $F1 = 0.841 TotalPhenols + 0.907 Flavanoids - 0.516 NonflavanoidsPhenols + 0.697 Proanthocyanins + 0.750 OD280$
+- $F2 = 0.763 Alcohol + 0.769 Proline$
+- $F3 = 0.967 Ash + 0.541 AshAlcanity$
+- $F4 = 0.875 ColorIntensity$
+- $F5 = 0.793 MalicAcid - 0.524 Hue$
+- $F6 = 0.958 Magnesium$
+
+La interpretación química de los vinos se puede realizar a partir de los componentes principales obtenidos en 6 factores que representan las dimensiones de los datos.
+
+La rotación de factores permitió identificar las variables que mejor explican la variabilidad de los datos y reducir la dimensionalidad del dataset. La rotación varimax y promax no mostraron diferencias significativas en los resultados obtenidos.
+
+Esto provee una base cuantitativa solida para la interpretación química de los vinos y su aplicación en enología.
 
 
 ## Bibliografía
 
-https://archive.ics.uci.edu/dataset/109/wine
+- Dua, D. & Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
 
+- Dataset específico: Wine Data Set. (1991). Recuperado de https://archive.ics.uci.edu/dataset/109/wine.
 
 
 
