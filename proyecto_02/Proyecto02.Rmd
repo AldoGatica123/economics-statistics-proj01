@@ -24,7 +24,7 @@ El presente proyecto tiene como objetivo realizar un análisis de factores y com
 
 # Marco Teórico
 
-Fundamentos del ACP aplicado a datos químicos de vinos:
+Fundamentos del ACP aplicado a datos químicos de vinos:  
 Normalización de datos: Esencial debido a las diferentes escalas de medición (por ejemplo, Alcohol en % vol vs Proline en mg/L).
 
 Matriz de correlación: El ACP revelará cómo las diferentes propiedades químicas del vino covarían entre sí.
