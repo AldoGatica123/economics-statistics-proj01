@@ -25,26 +25,24 @@ head(dataset)
 ## Ejercicio 1
 
 ```{r}
+data <- dataset[,-1]
 
-(principal(dataset[,-1], nfactors=1))
-
-fa.parallel(dataset[,-1], n.obs=302, fa="pc", n.iter=100,
-            show.legend=FALSE, main="Scree plot with parallel analysis")
+(principal(data, nfactors=1))
 ```
+
+### Interpretación
+
+- Al realizar un análisis de factores con 1, se observa que el primer factor explica el 75% de la varianza total. 
 
 ## Ejercicio 2
 
-
 ```{r}
-(principal(dataset[,-1], nfactors=2))
-(principal(dataset[,-1], nfactors=3))
+(principal(data, nfactors=2))
+(principal(data, nfactors=3))
 
-```
+fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
+            show.legend=FALSE, main="Scree plot with parallel analysis")
 
-
-```{r}
-
-(principal(dataset[,-1], nfactors=2, rotate = "varimax"))
 ```
 
 ### Interpretación
@@ -52,15 +50,24 @@ fa.parallel(dataset[,-1], n.obs=302, fa="pc", n.iter=100,
 - El análisis de componentes principales (PCA) sugiere que el número óptimo de factores es 2, ya que la varianza explicada por los factores disminuye significativamente después del segundo factor. Y con un solo factor se explica el 75% de la varianza, con 2 se explica un 96% de la varianza.
 - La grafica de scree muestra un "codo" en el segundo factor, lo que indica que los factores adicionales no explican una cantidad significativa de varianza adicional.
 
-- Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y al agrupar las demás en desarrollo.
+- **Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y Desarrollo agrupado las demás.**
+
+## Ejercicio 3
+
+```{r}
+
+(principal(data, nfactors=2, rotate = "varimax"))
+```
+
+### Interpretación
 
 - Al realizar una rotación varimax se observa que los resultados son idénticos a los dos componentes originales, ya no se puede simplicar más.
 
+## Ejercicio 4
 
 ```{r}
-pc <- principal(dataset[,-1], nfactors=2, score=TRUE)
-head(pc$scores)
-cor(dataset[,-1], pc$score)
+(principal(data, nfactors=2))
+
 ```
 
 
