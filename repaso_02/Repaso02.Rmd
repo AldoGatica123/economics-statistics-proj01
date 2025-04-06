@@ -1,0 +1,62 @@
+---
+title: "Repaso 02"
+author: "Aldo Gatica 1288813"
+date: "2025-04-03"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(psych)
+library(readxl)
+```
+
+```{r}
+# Carga de datos
+# Load excel file
+dataset <- read_excel("Departamentos.xlsx", sheet = "Departamentos")
+head(dataset)
+```
+
+
+# Chapter 14
+
+## Ejercicio 1
+
+```{r}
+
+(principal(dataset[,-1], nfactors=1))
+
+fa.parallel(dataset[,-1], n.obs=302, fa="pc", n.iter=100,
+            show.legend=FALSE, main="Scree plot with parallel analysis")
+```
+
+### Interpretación
+
+- El análisis de componentes principales (PCA) sugiere que el número óptimo de factores es 2, ya que la varianza explicada por los factores disminuye significativamente después del segundo factor. Y con un solo factor se explica el 75% de la varianza, con 2 se explica un 96% de la varianza.
+- La grafica de scree muestra un "codo" en el segundo factor, lo que indica que los factores adicionales no explican una cantidad significativa de varianza adicional.
+
+- Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y al agrupar las demás en desarrollo.
+
+## Ejercicio 2
+
+
+```{r}
+(principal(dataset[,-1], nfactors=2))
+
+```
+
+
+
+
+
+```{r}
+
+(principal(dataset[,-1], nfactors=3))
+```
+
+
+
+
+
