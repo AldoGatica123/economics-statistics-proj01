@@ -32,6 +32,21 @@ fa.parallel(dataset[,-1], n.obs=302, fa="pc", n.iter=100,
             show.legend=FALSE, main="Scree plot with parallel analysis")
 ```
 
+## Ejercicio 2
+
+
+```{r}
+(principal(dataset[,-1], nfactors=2))
+(principal(dataset[,-1], nfactors=3))
+
+```
+
+
+```{r}
+
+(principal(dataset[,-1], nfactors=2, rotate = "varimax"))
+```
+
 ### Interpretación
 
 - El análisis de componentes principales (PCA) sugiere que el número óptimo de factores es 2, ya que la varianza explicada por los factores disminuye significativamente después del segundo factor. Y con un solo factor se explica el 75% de la varianza, con 2 se explica un 96% de la varianza.
@@ -39,24 +54,14 @@ fa.parallel(dataset[,-1], n.obs=302, fa="pc", n.iter=100,
 
 - Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y al agrupar las demás en desarrollo.
 
-## Ejercicio 2
+- Al realizar una rotación varimax se observa que los resultados son idénticos a los dos componentes originales, ya no se puede simplicar más.
 
 
 ```{r}
-(principal(dataset[,-1], nfactors=2))
-
+pc <- principal(dataset[,-1], nfactors=2, score=TRUE)
+head(pc$scores)
+cor(dataset[,-1], pc$score)
 ```
-
-
-
-
-
-```{r}
-
-(principal(dataset[,-1], nfactors=3))
-```
-
-
 
 
 
