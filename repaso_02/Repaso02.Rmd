@@ -38,7 +38,7 @@ head(data)
 ## Ejercicio 2
 
 ```{r}
-pc <- principal(data$cor, nfactors=2)
+pc <- principal(cor(data), nfactors=2)
 (principal(data, nfactors=3))
 
 fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
@@ -67,9 +67,11 @@ fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
 ## Ejercicio 4
 
 ```{r}
-(principal(data, nfactors=2))
-
+rv <- principal(cov(data), nfactors=2, rotate= "varimax")
+rc <- principal(cor(data), nfactors=2, rotate= "varimax")
+round(unclass(rc$weights), 2)
+rv
+rc
 ```
 
-
-
+Al utilizar la correlación y covarianza, se observa que los resultados son similares. La diferencia es que la correlación estandariza los datos, mientras que la covarianza no lo hace. Por lo tanto, la correlación es más útil cuando las variables tienen diferentes escalas o unidades de medida. En este caso no se vieron afectados los resultados.
