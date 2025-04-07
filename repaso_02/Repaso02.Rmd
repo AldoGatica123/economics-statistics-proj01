@@ -34,7 +34,7 @@ head(data)
 
 ### Interpretación
 
-- Al realizar un análisis de factores con 1, se observa que el primer factor explica el 75% de la varianza total. 
+- Al realizar un análisis de factores con 1, se observa que el primer factor explica el 75% de la varianza total del conjunto de datos. Esto indica que el primer factor es el más importante y captura la mayor parte de la información contenida en las variables originales. Sin embargo, al observar los resultados, se puede notar que el primer factor no tiene una carga alta en ninguna de las variables individuales, lo que sugiere que el primer factor no está claramente definido y puede ser difícil de interpretar.
 
 ## Ejercicio 2
 
@@ -74,7 +74,7 @@ head(pc$scores)
 
 ### Interpretación
 
-- Al realizar el análisis de componentes principales (PCA) y obtener los puntajes de los componentes, se observa que los puntajes son una combinación lineal de las variables originales. Estos puntajes pueden ser utilizados como nuevas variables para representar la información contenida en las variables originales.
+- Al realizar el análisis de componentes principales (PCA) y obtener los puntajes de los componentes, se observa que los puntajes son una combinación lineal de las variables originales. Estos puntajes pueden ser utilizados como nuevas variables para representar la información contenida en las variables originales y reducir la dimensionalidad del conjunto de datos.
 
 ## Ejercicio 5
 
@@ -86,7 +86,7 @@ rc
 
 ### Interpretación
 
-- Al utilizar la correlación y covarianza, se observa que los resultados son similares. La diferencia es que la correlación estandariza los datos, mientras que la covarianza no lo hace. Por lo tanto, la correlación es más útil cuando las variables tienen diferentes escalas o unidades de medida. En este caso no se vieron afectados los resultados.
+- Al utilizar la correlación y covarianza, se observa que los resultados son similares. La diferencia es que la correlación estandariza los datos, mientras que la covarianza no lo hace. Por lo tanto, la correlación es más útil cuando las variables tienen diferentes escalas o unidades de medida. En este caso no se vieron afectados los resultados. Y deducimos que la correlación es más útil para comparar variables que tienen diferentes escalas o unidades de medida.
 
 
 # Análisis de factores
@@ -99,6 +99,24 @@ covariances <- cov(cor(data))
 # convert covariances to correlations
 correlations <- cov2cor(covariances)
 correlations
+```
+
+
+```{r}
+
+# Eliminar variables
+simple_data <- data[,-c(2, 4, 5, 6, 7, 8, 9, 10)]
+
+# Análisis de factores
+correlations <- cor(simple_data)
+correlations
+
+
+fa.parallel(correlations, n.obs=112, fa="both", n.iter=100,
+            main="Scree plots with parallel analysis")
+
+fa <- fa(correlations, nfactors=2, rotate="none", fm="pa")
+fa
 ```
 
 ## Interpretación
@@ -119,22 +137,23 @@ Lo que nos deja solamente con las siguientes variables:
 3. Gini
 2. IDH
 
+## Ejercicio 7
 
 ```{r}
-
-# Eliminar variables
-data <- data[,-c(2, 4, 5, 6, 7, 8, 9, 10)]
-
-# Análisis de factores
 correlations <- cor(data)
-correlations
-
-
-fa.parallel(correlations, n.obs=112, fa="both", n.iter=100,
-            main="Scree plots with parallel analysis")
-
-fa <- fa(correlations, nfactors=2, rotate="none", fm="pa")
-fa
+fa.varimax <- fa(correlations, nfactors=2, rotate="varimax", fm="pa")
+fa.varimax
 ```
 
+PA1 representa un eje de desarrollo humano y económico, donde puntuaciones altas indican mejor calidad de vida y bajas indican desigualdad, lo que se traduce en un mayor desarrollo humano y económico. PA2 representa un eje de desarrollo poblacional, donde puntuaciones altas indican una población más grande y bajas indican una población más pequeña.
 
+## Ejercicio 8
+
+```{r}
+fa.promax <- fa(correlations, nfactors=2, rotate="promax", fm="pa")
+fa.promax
+```
+
+Al interpretar las variables con varimax y promax se sugiere ignorar PA2 si el foco es el desarrollo (PA1 explica el 75% de la varianza).
+
+Varimax es suficiente para este caso (factores casi independientes). Por lo tanto, no es necesario utilizar promax y se puede utilizar varimax para simplificar el análisis.
