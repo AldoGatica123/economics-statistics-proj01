@@ -10,6 +10,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 library(psych)
 library(readxl)
+library(flexclust)
+library(cluster)
 ```
 
 ```{r}
@@ -164,4 +166,30 @@ fa.promax
 
 
 - **Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y Desarrollo agrupado las demás.**
+
+#Chapter 16
+
+```{r}
+par(ask=TRUE)
+opar <- par(no.readonly=FALSE)
+```
+
+```{r}
+# Calculating Distances
+data(data, package="flexclust")
+head(data, 2)
+d <- dist(data)
+as.matrix(d)[1:4,1:4]
+```
+
+## Ejercicio 1
+```{r}
+data(data, package="flexclust")
+row.names(data) <- tolower(row.names(data))
+data.scaled <- scale(data)                                  
+d <- dist(data.scaled)                                          
+fit.average <- hclust(d, method="average")                          
+plot(fit.average, hang=-1, cex=.8, main="Average Linkage Clustering")
+```
+```
 
