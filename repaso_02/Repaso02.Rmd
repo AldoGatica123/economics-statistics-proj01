@@ -16,7 +16,8 @@ library(readxl)
 # Carga de datos
 # Load excel file
 dataset <- read_excel("Departamentos.xlsx", sheet = "Departamentos")
-head(dataset)
+dataset <- as.data.frame(dataset)
+rownames(dataset) <- dataset[,1]
 ```
 
 
@@ -26,7 +27,7 @@ head(dataset)
 
 ```{r}
 data <- dataset[,-1]
-
+head(data)
 (principal(data, nfactors=1))
 ```
 
@@ -37,7 +38,7 @@ data <- dataset[,-1]
 ## Ejercicio 2
 
 ```{r}
-(principal(data, nfactors=2))
+pc <- principal(data$cor, nfactors=2)
 (principal(data, nfactors=3))
 
 fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
