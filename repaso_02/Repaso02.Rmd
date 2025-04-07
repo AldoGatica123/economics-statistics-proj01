@@ -167,29 +167,28 @@ fa.promax
 
 - **Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y Desarrollo agrupado las demás.**
 
-#Chapter 16
-
-```{r}
-par(ask=TRUE)
-opar <- par(no.readonly=FALSE)
-```
-
-```{r}
-# Calculating Distances
-data(data, package="flexclust")
-head(data, 2)
-d <- dist(data)
-as.matrix(d)[1:4,1:4]
-```
+# Chapter 16
 
 ## Ejercicio 1
 ```{r}
-data(data, package="flexclust")
+# Calculating Distances
+data(dataset, package="flexclust")
 row.names(data) <- tolower(row.names(data))
+d <- dist(dataset)
+as.matrix(d)[1:4,1:4]
 data.scaled <- scale(data)                                  
-d <- dist(data.scaled)                                          
+d <- dist(data.scaled)        
+```
+
+```{r}
+# Average-Linkage clustering
 fit.average <- hclust(d, method="average")                          
 plot(fit.average, hang=-1, cex=.8, main="Average Linkage Clustering")
 ```
-```
+
+## Interpretación
+
+- En el dendrograma se observa que los departamentos de la región metropolitana de Guatemala es el más aislado, lo que indica que es el más diferente de los demás departamentos. Esto puede deberse a su alta población y desarrollo humano en comparación con los demás departamentos.
+- Los departamentos del occidente de Guatemala son los más similares entre sí, esto puede deberse a factores como la geografía, la cultura y la economía de la región. Asímismo los del oriente que están agrupados entre sí.
+
 

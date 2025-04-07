@@ -1,5 +1,66 @@
 ---
-title: "Repaso02Parte02"
+title: "Repaso 02 - Parte 2"
+author: "Aldo Gatica 1288813"
+date: "2025-04-03"
 output: html_document
 ---
 
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(psych)
+library(readxl)
+library(flexclust)
+library(cluster)
+```
+
+Análisis socioeconómico de los departamentos de Guatemala, mediante técnicas multivariadas. Los departamentos de Guatemala presentan grandes diferencias en términos de desarrollo socioeconómico, acceso a servicios básicos y niveles de pobreza. Para comprender mejor la
+estructura de estos factores y cómo se agrupan los departamentos según sus características, se propone un análisis basado en técnicas multivariadas.
+
+¿Cómo se pueden agrupar los departamentos de Guatemala en función de sus características socioeconómicas mediante análisis de componentes principales, análisis factorial y técnicas de agrupación?
+
+```{r}
+# Carga de datos
+dataset <- read_excel("Departamentos.xlsx", sheet = "Departamentos")
+dataset <- as.data.frame(dataset)
+rownames(dataset) <- dataset[,1]
+data <- dataset[,-1]
+head(data)
+```
+
+## Análisis de Componentes Principales (ACP)
+
+Utilizar ACP para identificar las principales dimensiones que explican la variabilidad en los indicadores socioeconómicos.  
+- Determinar cuántos componentes explican la mayor parte de la variabilidad.  
+- Interpretar los componentes principales y su relación con las variables originales.
+
+```{r}
+pc <- principal(cor(data), nfactors=2)
+(principal(data, nfactors=3))
+
+fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
+            show.legend=FALSE, main="Scree plot with parallel analysis")
+```
+
+
+## Análisis Factorial (AF)
+Aplicar AF para detectar estructuras ocultas en los datos y agrupar variables en factores interpretables.  
+- Extraer factores latentes que expliquen la correlación entre las variables.  
+- Asignar significado a los factores y comparar con los resultados del ACP.
+
+```{r}
+options(digits=2)
+covariances <- cov(cor(data))
+# convert covariances to correlations
+correlations <- cov2cor(covariances)
+correlations
+```
+
+
+## Análisis de Clustering Jerárquico
+
+## Análisis de Clustering No Jerárquico
+
+Implementar AC jerárquico y no jerárquico para clasificar los departamentos en grupos homogéneos según su desarrollo socioeconómico.  
+- Aplicar un clustering jerárquico para determinar el número óptimo de grupos basado en distancias entre departamentos.  
+- Aplicar k-means para segmentar los departamentos y analizar las características de cada grupo con base a boxplots.
