@@ -52,7 +52,7 @@ fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
 - El análisis de componentes principales (PCA) sugiere que el número óptimo de factores es 2, ya que la varianza explicada por los factores disminuye significativamente después del segundo factor. Y con un solo factor se explica el 75% de la varianza, con 2 se explica un 96% de la varianza.
 - La grafica de scree muestra un "codo" en el segundo factor, lo que indica que los factores adicionales no explican una cantidad significativa de varianza adicional.
 
-- **Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y Desarrollo agrupado las demás.**
+- **Podemos agrupar el dataset en dos componentes principales, Tamaño poblacional: Población y PEA. Y Desarrollo agrupado las demás.**
 
 ## Ejercicio 3
 
@@ -145,7 +145,9 @@ fa.varimax <- fa(correlations, nfactors=2, rotate="varimax", fm="pa")
 fa.varimax
 ```
 
-PA1 representa un eje de desarrollo humano y económico, donde puntuaciones altas indican mejor calidad de vida y bajas indican desigualdad, lo que se traduce en un mayor desarrollo humano y económico. PA2 representa un eje de desarrollo poblacional, donde puntuaciones altas indican una población más grande y bajas indican una población más pequeña.
+### Interpretación
+
+- PA1 representa un eje de desarrollo humano y económico, donde puntuaciones altas indican mejor calidad de vida y bajas indican desigualdad, lo que se traduce en un mayor desarrollo humano y económico. PA2 representa un eje de desarrollo poblacional, donde puntuaciones altas indican una población más grande y bajas indican una población más pequeña.
 
 ## Ejercicio 8
 
@@ -154,6 +156,12 @@ fa.promax <- fa(correlations, nfactors=2, rotate="promax", fm="pa")
 fa.promax
 ```
 
-Al interpretar las variables con varimax y promax se sugiere ignorar PA2 si el foco es el desarrollo (PA1 explica el 75% de la varianza).
+### Interpretación
 
-Varimax es suficiente para este caso (factores casi independientes). Por lo tanto, no es necesario utilizar promax y se puede utilizar varimax para simplificar el análisis.
+- Al interpretar las variables con varimax y promax se sugiere ignorar PA2 si el foco es el desarrollo (PA1 explica el 75% de la varianza).
+
+- Varimax es suficiente para este caso (factores casi independientes). Por lo tanto, no es necesario utilizar promax y se puede utilizar varimax para simplificar el análisis.
+
+
+- **Podemos agrupar el dataset en dos factores, Tamaño poblacional: Población y PEA. Y Desarrollo agrupado las demás.**
+
