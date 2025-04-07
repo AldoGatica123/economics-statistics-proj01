@@ -22,6 +22,7 @@ rownames(dataset) <- dataset[,1]
 
 
 # Chapter 14
+# Análisis de Componentes Principales
 
 ## Ejercicio 1
 
@@ -67,10 +68,13 @@ fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
 ## Ejercicio 4
 
 ```{r}
-
+pc <- principal(data, nfactors=2, score=TRUE)
+head(pc$scores)
 ```
 
-Al utilizar la correlación y covarianza, se observa que los resultados son similares. La diferencia es que la correlación estandariza los datos, mientras que la covarianza no lo hace. Por lo tanto, la correlación es más útil cuando las variables tienen diferentes escalas o unidades de medida. En este caso no se vieron afectados los resultados.44
+### Interpretación
+
+- Al realizar el análisis de componentes principales (PCA) y obtener los puntajes de los componentes, se observa que los puntajes son una combinación lineal de las variables originales. Estos puntajes pueden ser utilizados como nuevas variables para representar la información contenida en las variables originales.
 
 ## Ejercicio 5
 
@@ -80,6 +84,15 @@ round(unclass(rc$weights), 2)
 rc
 ```
 
+### Interpretación
+
+- Al utilizar la correlación y covarianza, se observa que los resultados son similares. La diferencia es que la correlación estandariza los datos, mientras que la covarianza no lo hace. Por lo tanto, la correlación es más útil cuando las variables tienen diferentes escalas o unidades de medida. En este caso no se vieron afectados los resultados.
+
+
+# Análisis de factores
+## Ejercicio 6
+
+
 ```{r}
 options(digits=2)
 covariances <- cov(cor(data))
@@ -88,10 +101,40 @@ correlations <- cov2cor(covariances)
 correlations
 ```
 
-## Ejercicio 6
+## Interpretación
+
+- La matriz de correlaciones muestra que las variables están muy correlacionadas entre sí. 
+Se eliminarán las siguientes para continuar el análisis de factores:
+1. PEA
+2. Pobreza
+3. Analfabetismo
+4. Esperanza de vida
+5. Desempleo
+6. Agua potable
+7. Electricidad
+8. PIB per cápita
+
+Lo que nos deja solamente con las siguientes variables:
+1. Población
+3. Gini
+2. IDH
+
 
 ```{r}
+
+# Eliminar variables
+data <- data[,-c(2, 4, 5, 6, 7, 8, 9, 10)]
+
+# Análisis de factores
+correlations <- cor(data)
+correlations
+
+
+fa.parallel(correlations, n.obs=112, fa="both", n.iter=100,
+            main="Scree plots with parallel analysis")
+
 fa <- fa(correlations, nfactors=2, rotate="none", fm="pa")
 fa
 ```
+
 
