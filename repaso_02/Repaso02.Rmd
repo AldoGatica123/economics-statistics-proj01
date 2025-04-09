@@ -12,6 +12,8 @@ library(psych)
 library(readxl)
 library(flexclust)
 library(cluster)
+library(NbClust)
+library(factoextra)
 ```
 
 ```{r}
@@ -29,9 +31,9 @@ rownames(dataset) <- dataset[,1]
 ## Ejercicio 1
 
 ```{r}
-data <- dataset[,-1]
-head(data)
-(principal(data, nfactors=1))
+departamentos <- dataset[,-1]
+head(departamentos)
+(principal(departamentos, nfactors=1))
 ```
 
 ### Interpretación
@@ -41,10 +43,10 @@ head(data)
 ## Ejercicio 2
 
 ```{r}
-pc <- principal(cor(data), nfactors=2)
-(principal(data, nfactors=3))
+pc <- principal(cor(departamentos), nfactors=2)
+(principal(departamentos, nfactors=3))
 
-fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
+fa.parallel(departamentos, n.obs=302, fa="pc", n.iter=100,
             show.legend=FALSE, main="Scree plot with parallel analysis")
 
 ```
@@ -60,7 +62,7 @@ fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
 
 ```{r}
 
-(principal(data, nfactors=2, rotate = "varimax"))
+(principal(departamentos, nfactors=2, rotate = "varimax"))
 ```
 
 ### Interpretación
@@ -70,7 +72,7 @@ fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
 ## Ejercicio 4
 
 ```{r}
-pc <- principal(data, nfactors=2, score=TRUE)
+pc <- principal(departamentos, nfactors=2, score=TRUE)
 head(pc$scores)
 ```
 
@@ -81,7 +83,7 @@ head(pc$scores)
 ## Ejercicio 5
 
 ```{r}
-rc <- principal(cor(data), nfactors=2, rotate= "varimax")
+rc <- principal(cor(departamentos), nfactors=2, rotate= "varimax")
 round(unclass(rc$weights), 2)
 rc
 ```
@@ -97,7 +99,7 @@ rc
 
 ```{r}
 options(digits=2)
-covariances <- cov(cor(data))
+covariances <- cov(cor(departamentos))
 # convert covariances to correlations
 correlations <- cov2cor(covariances)
 correlations
@@ -107,7 +109,7 @@ correlations
 ```{r}
 
 # Eliminar variables
-simple_data <- data[,-c(2, 4, 5, 6, 7, 8, 9, 10)]
+simple_data <- departamentos[,-c(2, 4, 5, 6, 7, 8, 9, 10)]
 
 # Análisis de factores
 correlations <- cor(simple_data)
@@ -142,7 +144,7 @@ Lo que nos deja solamente con las siguientes variables:
 ## Ejercicio 7
 
 ```{r}
-correlations <- cor(data)
+correlations <- cor(departamentos)
 fa.varimax <- fa(correlations, nfactors=2, rotate="varimax", fm="pa")
 fa.varimax
 ```
@@ -173,11 +175,11 @@ fa.promax
 ```{r}
 # Calculating Distances
 data(dataset, package="flexclust")
-row.names(data) <- tolower(row.names(data))
+row.names(departamentos) <- tolower(row.names(departamentos))
 d <- dist(dataset)
 as.matrix(d)[1:4,1:4]
-data.scaled <- scale(data)                                  
-d <- dist(data.scaled)        
+departamentos.scaled <- scale(departamentos)                                  
+d <- dist(departamentos.scaled)        
 ```
 
 ```{r}
@@ -191,4 +193,42 @@ plot(fit.average, hang=-1, cex=.8, main="Average Linkage Clustering")
 - En el dendrograma se observa que los departamentos de la región metropolitana de Guatemala es el más aislado, lo que indica que es el más diferente de los demás departamentos. Esto puede deberse a su alta población y desarrollo humano en comparación con los demás departamentos.
 - Los departamentos del occidente de Guatemala son los más similares entre sí, esto puede deberse a factores como la geografía, la cultura y la economía de la región. Asímismo los del oriente que están agrupados entre sí.
 
+## Ejercicio 2
+```{r}
+nc <- NbClust(departamentos.scaled, distance="euclidean", 
+              min.nc=2, max.nc=13, method="average")
+```
+
+## Interpretación
+
+El análisis determinó que 3 clusters es el número óptimo de agrupamientos, respaldado por la mayoría de índices de validación (12 de 23). Aunque algunos métodos sugirieron otras opciones (2, 4, 5, etc.), la regla de la mayoría prioriza coherencia y consenso estadístico. Esta elección equilibra simplicidad y estructura significativa, pero debe validarse con gráficas (como el Dindex) y contexto teórico. En resumen, k=3 es la recomendación más robusta para segmentar los datos.
+
+## Ejercicio 3
+```{r}
+clusters <- cutree(fit.average, k=3) 
+table(clusters)
+aggregate(departamentos, by=list(cluster=clusters), median) 
+aggregate(as.data.frame(departamentos.scaled), by=list(cluster=clusters),
+          median)
+plot(fit.average, hang=-1, cex=.8,  
+     main="Average Linkage Clustering\n3 Cluster Solution")
+rect.hclust(fit.average, k=3)
+```
+
+## Interpretación
+
+El análisis de clustering jerárquico con enlace promedio identificó 3 grupos óptimos, mostrando una clara segmentación socioeconómica: el cluster 1 (1 caso) representa la mejor situación (alto PIB, IDH y servicios), el cluster 2 (13 casos) una situación intermedia, y el cluster 3 (8 casos) la condición más vulnerable (mayor pobreza y analfabetismo). Los valores escalados confirman estas diferencias significativas entre clusters. El dendrograma visualiza efectivamente esta estructura de agrupamiento. Esta solución permite identificar patrones útiles para políticas públicas diferenciadas según las necesidades de cada grupo.
+
+## Ejercicio 4
+
+```{r}
+data(departamentos, package="rattle")
+head(departamentos)
+df <- scale(departamentos[-1])  
+wssplot(df)      
+set.seed(1234)
+nc <- NbClust(df, min.nc=2, max.nc=13, method="kmeans")
+par(opar)
+table(nc$Best.n[1,])
+```
 
