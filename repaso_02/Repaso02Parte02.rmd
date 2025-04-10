@@ -12,6 +12,12 @@ library(psych)
 library(readxl)
 library(flexclust)
 library(cluster)
+library(NbClust)
+library(factoextra)
+library(rattle)
+library(fMultivar)
+library(ggplot2)
+library(tidyr)
 ```
 
 Análisis socioeconómico de los departamentos de Guatemala, mediante técnicas multivariadas. Los departamentos de Guatemala presentan grandes diferencias en términos de desarrollo socioeconómico, acceso a servicios básicos y niveles de pobreza. Para comprender mejor la
@@ -87,9 +93,99 @@ fa
 
 
 ## Análisis de Clustering Jerárquico
+Aplicar un clustering jerárquico para determinar el número óptimo de grupos basado en distancias entre departamentos.
+
+```{r}
+# Calculating Distances
+data(dataset, package="flexclust")
+row.names(departamentos) <- tolower(row.names(departamentos))
+d <- dist(dataset)
+as.matrix(d)[1:4,1:4]
+departamentos.scaled <- scale(departamentos)                                  
+d <- dist(departamentos.scaled)
+
+fit.average <- hclust(d, method="average")
+
+clusters <- cutree(fit.average, k=3) 
+table(clusters)
+aggregate(departamentos, by=list(cluster=clusters), median) 
+aggregate(as.data.frame(departamentos.scaled), by=list(cluster=clusters),
+          median)
+plot(fit.average, hang=-1, cex=.8,  
+     main="Average Linkage Clustering\n3 Cluster Solution")
+rect.hclust(fit.average, k=3)
+```
+
+## Resultados de Clustering Jerárquico
+- El análisis de clustering jerárquico sugiere que el número óptimo de grupos es 3, ya que la varianza explicada por los grupos disminuye significativamente después del tercer grupo.
+- La gráfica de dendrograma muestra una clara separación entre los grupos, lo que indica que los departamentos dentro de cada grupo son más similares entre sí que con los de otros grupos.
 
 ## Análisis de Clustering No Jerárquico
 
-Implementar AC jerárquico y no jerárquico para clasificar los departamentos en grupos homogéneos según su desarrollo socioeconómico.  
-- Aplicar un clustering jerárquico para determinar el número óptimo de grupos basado en distancias entre departamentos.  
-- Aplicar k-means para segmentar los departamentos y analizar las características de cada grupo con base a boxplots.
+Aplicar k-means para segmentar los departamentos y analizar las características de cada grupo con base a boxplots.
+
+```{r}
+opar <- par(no.readonly=FALSE)
+data(departamentos, package="rattle")
+wssplot <- function(data, nc=15, seed=1234){
+  wss <- (nrow(data)-1)*sum(apply(data,2,var))
+  for (i in 2:nc){
+    set.seed(seed)
+    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+  plot(1:nc, wss, type="b", xlab="Number of Clusters",
+       ylab="Within groups sum of squares")}
+
+head(departamentos)
+df <- scale(departamentos[-1])
+wssplot(df)
+set.seed(1234)
+nc <- NbClust(df, min.nc=2, max.nc=13, method="kmeans")
+par(opar)
+table(nc$Best.n[1,])
+barplot(table(nc$Best.n[1,]), 
+        xlab="Numer of Clusters", ylab="Number of Criteria",
+        main="Number of Clusters Chosen by 13 Criteria") 
+set.seed(1234)
+fit.km <- kmeans(df, 3, nstart=13) 
+fit.km$size
+fit.km$centers                                               
+aggregate(departamentos[-1], by=list(cluster=fit.km$cluster), mean)
+
+set.seed(1234)
+fit.pam <- pam(departamentos, k=3, stand=TRUE)       
+fit.pam$medoids                                 
+clusplot(fit.pam, main="Bivariate Cluster Plot")
+
+head(departamentos)
+# evaluate clustering
+ct.pam <- table(dataset$Departamento, fit.pam$clustering)
+ct.pam
+randIndex(ct.pam)
+
+## Avoiding non-existent clusters
+set.seed(1234)
+df <- rnorm2d(1000, rho=.5)
+df <- as.data.frame(df)
+plot(df, main="Bivariate Normal Distribution with rho=0.5")
+
+wssplot(df)
+nc <- NbClust(df, min.nc=2, max.nc=13, method="kmeans")
+par(opar)
+barplot(table(nc$Best.n[1,]),
+        xlab="Numer of Clusters", ylab="Number of Criteria",
+        main  ="Number of Clusters Chosen by 13 Criteria")
+
+fit <- pam(df, k=3)
+df$clustering <- factor(fit$clustering)
+ggplot(data=df, aes(x=V1, y=V2, color=clustering, shape=clustering)) +
+  geom_point() + ggtitle("Clustering of Bivariate Normal Data")
+
+plot(nc$All.index[,4], type="o", ylab="CCC",
+     xlab="Number of clusters", col="blue")
+```
+
+## Resultados de Clustering No Jerárquico
+
+- El análisis de clustering no jerárquico sugiere que el número óptimo de grupos es 3, ya que la varianza explicada por los grupos disminuye significativamente después del tercer grupo.
+- La gráfica de clusplot muestra una clara separación entre los grupos, lo que indica que los departamentos dentro de cada grupo son más similares entre sí que con los de otros grupos.
+- **Los resultados de ambos análisis de clustering son consistentes, sugiriendo que los departamentos pueden ser agrupados en 3 grupos distintos.**
