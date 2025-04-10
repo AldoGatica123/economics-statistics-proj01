@@ -14,6 +14,8 @@ library(flexclust)
 library(cluster)
 library(NbClust)
 library(factoextra)
+library(rattle)
+
 ```
 
 ```{r}
@@ -222,10 +224,19 @@ El análisis de clustering jerárquico con enlace promedio identificó 3 grupos 
 ## Ejercicio 4
 
 ```{r}
+opar <- par(no.readonly=FALSE)
 data(departamentos, package="rattle")
+wssplot <- function(data, nc=15, seed=1234){
+  wss <- (nrow(data)-1)*sum(apply(data,2,var))
+  for (i in 2:nc){
+    set.seed(seed)
+    wss[i] <- sum(kmeans(data, centers=i)$withinss)}
+  plot(1:nc, wss, type="b", xlab="Number of Clusters",
+       ylab="Within groups sum of squares")}
+
 head(departamentos)
-df <- scale(departamentos[-1])  
-wssplot(df)      
+df <- scale(departamentos[-1])
+wssplot(df)
 set.seed(1234)
 nc <- NbClust(df, min.nc=2, max.nc=13, method="kmeans")
 par(opar)
