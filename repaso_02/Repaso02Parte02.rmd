@@ -24,8 +24,8 @@ estructura de estos factores y cómo se agrupan los departamentos según sus car
 dataset <- read_excel("Departamentos.xlsx", sheet = "Departamentos")
 dataset <- as.data.frame(dataset)
 rownames(dataset) <- dataset[,1]
-data <- dataset[,-1]
-head(data)
+departamentos <- dataset[,-1]
+head(departamentos)
 ```
 
 ## Análisis de Componentes Principales (ACP)
@@ -35,12 +35,21 @@ Utilizar ACP para identificar las principales dimensiones que explican la variab
 - Interpretar los componentes principales y su relación con las variables originales.
 
 ```{r}
-pc <- principal(cor(data), nfactors=2)
-(principal(data, nfactors=3))
+pc <- principal(cor(departamentos), nfactors=2)
+(principal(departamentos, nfactors=2))
+(principal(departamentos, nfactors=3))
 
-fa.parallel(data, n.obs=302, fa="pc", n.iter=100,
+fa.parallel(departamentos, n.obs=302, fa="pc", n.iter=100,
             show.legend=FALSE, main="Scree plot with parallel analysis")
 ```
+
+## Resultados de ACP
+
+- El análisis de componentes principales (PCA) sugiere que el número óptimo de factores es 2, ya que la varianza explicada por los factores disminuye significativamente después del segundo factor. Y con un solo factor se explica el 75% de la varianza, con 2 se explica un 96% de la varianza.
+- La grafica de scree muestra un "codo" en el segundo factor, lo que indica que los factores adicionales no explican una cantidad significativa de varianza adicional.
+
+- **Podemos agrupar el dataset en dos componentes principales, Tamaño poblacional: Población y PEA. Y Desarrollo agrupado las demás.**
+
 
 
 ## Análisis Factorial (AF)
@@ -50,11 +59,31 @@ Aplicar AF para detectar estructuras ocultas en los datos y agrupar variables en
 
 ```{r}
 options(digits=2)
-covariances <- cov(cor(data))
+covariances <- cov(cor(departamentos))
 # convert covariances to correlations
 correlations <- cov2cor(covariances)
 correlations
+
+# Eliminar variables
+simple_data <- departamentos[,-c(2, 4, 5, 6, 7, 8, 9, 10)]
+
+# Análisis de factores
+correlations <- cor(simple_data)
+correlations
+
+
+fa.parallel(correlations, n.obs=112, fa="both", n.iter=100,
+            main="Scree plots with parallel analysis")
+
+fa <- fa(correlations, nfactors=2, rotate="none", fm="pa")
+fa
 ```
+
+## Resultados de AF
+
+- El análisis factorial (FA) sugiere que el número óptimo de factores es 2, ya que la varianza explicada por los factores disminuye significativamente después del segundo factor. Y con un solo factor se explica el 75% de la varianza, con 2 se explica un 96% de la varianza.
+- La grafica de scree muestra un "codo" en el segundo factor, lo que indica que los factores adicionales no explican una cantidad significativa de varianza adicional.
+- **En ambos análisis, el primer factor se relaciona con el tamaño poblacional (población y PEA), mientras que el segundo factor se relaciona con el desarrollo socioeconómico (acceso a servicios básicos y niveles de pobreza).**
 
 
 ## Análisis de Clustering Jerárquico
