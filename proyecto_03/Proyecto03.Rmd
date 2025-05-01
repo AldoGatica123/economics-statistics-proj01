@@ -1,5 +1,5 @@
 ---
-title: "Proyecto 2"
+title: "Proyecto 3 - Analisis de factores"
 author: "Aldo Gatica 1288813 - Alyson Rosales 1086622"
 date: "2025-03-24"
 output: html_document
@@ -12,15 +12,9 @@ library(psych)
 library(ggplot2)
 ```
 
-## Variables
-
-```{r,out,width="150", fig.align="center"}
-  knitr::include_graphics("./Variables_P2.jpeg")
-```
-
 # Introducción
 
-El presente proyecto tiene como objetivo realizar un análisis de factores y componentes principales a partir de un conjunto de datos de vinos. El dataset contiene 13 variables que describen las características de los vinos y una variable que indica la calidad del vino. El análisis de factores y componentes principales permitirá identificar las variables que mejor explican la variabilidad de los datos y reducir la dimensionalidad del dataset.
+El presente proyecto tiene como objetivo realizar un análisis de factores a partir de un conjunto de datos de vinos. El dataset contiene 13 variables que describen las características de los vinos y una variable que indica la calidad del vino. El análisis de factores permitirá identificar las dimensiones subyacentes que explican la variabilidad en los datos y facilitará la interpretación de las relaciones entre las variables.
 
 # Marco Teórico
 
@@ -29,19 +23,19 @@ Normalización de datos: Esencial debido a las diferentes escalas de medición (
 
 Matriz de correlación: El ACP revelará cómo las diferentes propiedades químicas del vino covarían entre sí.
 
-## Interpretación química:
+### Interpretación química:
 
   Componentes pueden representar dimensiones subyacentes como "cantidad de alcohol", "composición química" y otras propiedades.
 
   Cargas factoriales indicarán qué parámetros analíticos contribuyen a cada dimensión
 
-## Aplicaciones en enología:
+### Aplicaciones en enología:
 
-  Control de calidad: Detección de vinos atípicos
+  - Control de calidad: Detección de vinos atípicos
+  - Optimización de procesos: Identificación de parámetros clave
+  - Denominaciones de origen: Caracterización química objetiva
 
-  Optimización de procesos: Identificación de parámetros clave
-
-  Denominaciones de origen: Caracterización química objetiva
+## Variables
 
 ```{r}
 # Carga de datos
@@ -51,27 +45,32 @@ dataset.df <- data.frame(dataset)
 head(dataset.df)
 ```
 
+
+```{r,out,width="150", fig.align="center"}
+  knitr::include_graphics("./Variables_P2.jpeg")
+```
+
+
 ## Correlación de variables
 
 ```{r}
 round(cor(dataset.df),2)
 ```
 
+
 No hay correlaciones perfectas en el dataset, por lo que se procede a realizar el análisis de factores.
 
-# Analisis
-
-## Analisis de factores
+# Analisis de factores
 
 ```{r}
 
-(dataset.AF2 <- factanal(dataset.df,factors=2))
-(dataset.AF3 <- factanal(dataset.df,factors=3))
-(dataset.AF4 <- factanal(dataset.df,factors=4))
-(dataset.AF5 <- factanal(dataset.df,factors=5))
-(dataset.AF6 <- factanal(dataset.df,factors=6))
-(dataset.AF7 <- factanal(dataset.df,factors=7))
-(dataset.AF8 <- factanal(dataset.df,factors=8))
+dataset.AF2 <- factanal(dataset.df,factors=2)
+dataset.AF3 <- factanal(dataset.df,factors=3)
+dataset.AF4 <- factanal(dataset.df,factors=4)
+dataset.AF5 <- factanal(dataset.df,factors=5)
+dataset.AF6 <- factanal(dataset.df,factors=6)
+dataset.AF7 <- factanal(dataset.df,factors=7)
+dataset.AF8 <- factanal(dataset.df,factors=8)
 
 
 dataset.AF2$PVAL
@@ -81,11 +80,11 @@ dataset.AF5$PVAL
 dataset.AF6$PVAL
 dataset.AF7$PVAL
 dataset.AF8$PVAL
-
-scree(dataset.df, factors = TRUE)
-
 ```
 
+```{r}
+scree(dataset.df, factors = TRUE)
+```
 
 ### Determinación de cantidad de componentes
 
@@ -99,14 +98,6 @@ Aunque el gráfico de scree muestra un quiebre en el factor 4, el p-valor de est
 - $F4 = 0.875V10$
 - $F5 = 0.793V02 - 0.524V11$
 - $F6 = 0.958V05$
-
-## Analisis de componentes principales
-
-```{r}
-dataset.AF <- factanal(dataset.df,factors=6)
-dataset.AF
-```
-
 
 ## Rotación de factores
 
@@ -151,7 +142,7 @@ g_promax
 
 # Conclusiones
 
-Los componentes principales representan dimensiones como "composición química", "características organolépticas" y "propiedades físicas". Las cargas factoriales indican qué parámetros analíticos contribuyen a cada dimensión.
+Los factores representan dimensiones como "composición química", "características organolépticas" y "propiedades físicas". Las cargas factoriales indican qué parámetros analíticos contribuyen a cada dimensión.
 
 - $F1 = 0.841 Fenoles Totales + 0.907 Flavonoides - 0.516 Fenoles No Flavonoides + 0.697 Proantocianinas + 0.750 OD280$
 - $F2 = 0.763 Alcohol + 0.769 Prolina$
@@ -160,7 +151,7 @@ Los componentes principales representan dimensiones como "composición química"
 - $F5 = 0.793 Ácido Málico - 0.524 Tonalidad$
 - $F6 = 0.958 Magnesio$
 
-El análisis factorial reveló 6 componentes principales del vino:
+El análisis factorial reveló 6 factores del vino:
 
 - Estructura fenólica (F1: fenoles, flavonoides), relacionada con el cuerpo y amargor.
 - Potencial alcohólico (F2: alcohol, prolina), indicador de madurez de la uva.
@@ -180,6 +171,4 @@ La rotación de factores permitió identificar las variables que mejor explican 
 - Dua, D. & Graff, C. (2019). UCI Machine Learning Repository [http://archive.ics.uci.edu/ml]. Irvine, CA: University of California, School of Information and Computer Science.
 
 - Dataset específico: Wine Data Set. (1991). Recuperado de https://archive.ics.uci.edu/dataset/109/wine.
-
-
 

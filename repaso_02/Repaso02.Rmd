@@ -1,6 +1,6 @@
 ---
 title: "Repaso 02"
-author: "Aldo Gatica 1288813"
+author: "Alyson Rosales  1086622"
 date: "2025-04-03"
 output: html_document
 ---
