@@ -18,22 +18,14 @@ El presente proyecto tiene como objetivo realizar un análisis de factores a par
 
 # Marco Teórico
 
-Fundamentos del ACP aplicado a datos químicos de vinos:  
-Normalización de datos: Esencial debido a las diferentes escalas de medición (por ejemplo, Alcohol en % vol vs Proline en mg/L).
+El análisis factorial es una técnica estadística que permite reducir la dimensionalidad de un conjunto de datos, identificando factores latentes que agrupan variables altamente correlacionadas. En el contexto del presente análisis, se aplica a un conjunto de datos de vinos compuesto por 13 variables químicas, con el fin de identificar qué componentes explican mejor la variabilidad del vino.
 
-Matriz de correlación: El ACP revelará cómo las diferentes propiedades químicas del vino covarían entre sí.
+La elección del número óptimo de factores se basa en criterios como el p-valor, que indica la adecuación del modelo; el gráfico de sedimentación (scree plot), que muestra el punto de inflexión en los autovalores; y el criterio de Kaiser, que sugiere retener factores con autovalores mayores a 1.
 
-### Interpretación química:
+### Cargas Factoriales y Unicidad
 
-  Componentes pueden representar dimensiones subyacentes como "cantidad de alcohol", "composición química" y otras propiedades.
+Las cargas factoriales reflejan la intensidad de la relación entre cada variable y un factor; cargas altas indican una fuerte asociación. La unicidad mide la proporción de varianza no explicada por los factores comunes; valores bajos de unicidad sugieren que el modelo describe bien esa variable.
 
-  Cargas factoriales indicarán qué parámetros analíticos contribuyen a cada dimensión
-
-### Aplicaciones en enología:
-
-  - Control de calidad: Detección de vinos atípicos
-  - Optimización de procesos: Identificación de parámetros clave
-  - Denominaciones de origen: Caracterización química objetiva
 
 ## Variables
 
@@ -140,7 +132,7 @@ theme_minimal()
 g_promax
 ```
 
-# Conclusiones
+# Conclusiones e interpretacion de resultados:
 
 Los factores representan dimensiones como "composición química", "características organolépticas" y "propiedades físicas". Las cargas factoriales indican qué parámetros analíticos contribuyen a cada dimensión.
 
