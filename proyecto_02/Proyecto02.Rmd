@@ -1,0 +1,71 @@
+---
+title: "Proyecto 2 - Analisis de Componentes Principales"
+author: "Aldo Gatica 1288813 - Alyson Rosales 1086622"
+date: "2025-05-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(psych)
+library(ggplot2)
+```
+
+# Introducción
+
+
+
+# Marco Teórico
+
+
+
+
+
+## Variables
+
+```{r}
+# Carga de datos
+dataset <- read.csv("cancer_patients.csv")
+dataset.df <- data.frame(dataset)
+head(dataset.df)
+```
+
+
+```{r,out,width="150", fig.align="center"}
+  knitr::include_graphics("./Variables_P2.jpeg")
+```
+
+
+## Correlación de variables
+
+```{r}
+round(cor(dataset.df),2)
+```
+
+
+
+# Analisis de Componenentes Principales
+
+```{r}
+
+```
+
+```{r}
+scree(dataset.df, factors = TRUE)
+```
+
+### Determinación de cantidad de componentes
+
+
+```{r}
+
+```
+
+# Conclusiones e interpretacion de resultados:
+
+
+## Bibliografía
+
+- Dataset específico: Cancer Cases Report In all the World in las 10 Years. (2024). Recuperado de https://www.kaggle.com/datasets/zahidmughal2343/global-cancer-patients-2015-2024?resource=download.
+
