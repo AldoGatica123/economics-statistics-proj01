@@ -25,18 +25,50 @@ El análisis de componentes principales (PCA) es una técnica estadística utili
 ```{r}
 # Carga de datos
 dataset <- read.csv("cancer_patients.csv")
+dataset <- dataset[,-3]
+dataset <- dataset[,-8]
+dataset <- dataset[,-8]
+dataset <- dataset[,-8]
+dataset <- dataset[,-8]
+dataset <- dataset[,-8]
 head(dataset)
 ```
+
+### Tipos de cancer de la variable V09
 
 
 # Analisis de Componenentes Principales
 
 ```{r}
 
-ACP <- princomp(dataset)
+ACP.1 <- princomp(dataset)
+ACP.2 <- princomp(dataset, cor = TRUE)
+eigen(cor(dataset))
 ```
 
 ### Determinación de cantidad de componentes
+```{r}
+summary(ACP.1)
+summary(ACP.2)
+
+loadings(ACP.1)
+loadings(ACP.2)
+
+par(mfrow=c(1,2))
+plot(ACP.1)
+plot(ACP.2)
+
+
+biplot(ACP.1)
+abline(h=0,col="blue")
+abline(v=0,col="blue")
+grid()
+
+biplot(ACP.2)
+abline(h=0,col="blue")
+abline(v=0,col="blue")
+grid()
+```
 
 
 # Conclusiones e interpretacion de resultados:
