@@ -38,24 +38,34 @@ head(dataset)
 # Analisis de Componenentes Principales
 
 ```{r}
-ACP.1 <- princomp(dataset)
-ACP.2 <- princomp(dataset, cor = TRUE)
-eigen(cor(dataset))
+pc <- principal(dataset, nfactors=1)
+pc
 ```
+
+
+##  Determinacion de cantidad de componentes principales
+```{r}
+fa.parallel(Harman23.cor$cov, n.obs=302, fa="pc", n.iter=100,
+            show.legend=FALSE, main="Scree plot with parallel analysis")
+```
+
+### Interpretacion:
+
+La grafica scree plot muestra la cantidad de componentes principales que explican la varianza en los datos. En este caso, se observa que los primeros dos componentes explican la mayor parte de la varianza, lo que sugiere que estos son los más relevantes para el análisis.
+
+## ACP con dos componentes
+
+```{r}
+PC <- principal(Harman23.cor$cov, nfactors=2, rotate="none")
+PC
+rc <- principal(Harman23.cor$cov, nfactors=2, rotate="varimax")
+rc
+round(unclass(rc$weights),2)
+```
+
 
 ### Determinación de cantidad de componentes
-```{r}
-summary(ACP.1)
-summary(ACP.2)
 
-loadings(ACP.1)
-loadings(ACP.2)
-
-fviz_eig(ACP.1, 
-         addlabels = TRUE, 
-         hline = c(yintercept = 1, linetype = "dashed")) +
-  labs(title = "Scree Plot (Regla de Kaiser)")
-```
 
 
 # Conclusiones e interpretacion de resultados:
