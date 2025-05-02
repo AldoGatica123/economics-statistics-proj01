@@ -8,6 +8,8 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(psych)
+library(factoextra)
+
 ```
 
 # Introducción
@@ -25,22 +27,17 @@ El análisis de componentes principales (PCA) es una técnica estadística utili
 ```{r}
 # Carga de datos
 dataset <- read.csv("cancer_patients.csv")
-dataset <- dataset[,-3]
-dataset <- dataset[,-8]
-dataset <- dataset[,-8]
-dataset <- dataset[,-8]
-dataset <- dataset[,-8]
-dataset <- dataset[,-8]
 head(dataset)
 ```
 
-### Tipos de cancer de la variable V09
 
+```{r,out,width="150", fig.align="center"}
+  knitr::include_graphics("./Variables_P2.png")
+```
 
 # Analisis de Componenentes Principales
 
 ```{r}
-
 ACP.1 <- princomp(dataset)
 ACP.2 <- princomp(dataset, cor = TRUE)
 eigen(cor(dataset))
@@ -54,20 +51,10 @@ summary(ACP.2)
 loadings(ACP.1)
 loadings(ACP.2)
 
-par(mfrow=c(1,2))
-plot(ACP.1)
-plot(ACP.2)
-
-
-biplot(ACP.1)
-abline(h=0,col="blue")
-abline(v=0,col="blue")
-grid()
-
-biplot(ACP.2)
-abline(h=0,col="blue")
-abline(v=0,col="blue")
-grid()
+fviz_eig(ACP.1, 
+         addlabels = TRUE, 
+         hline = c(yintercept = 1, linetype = "dashed")) +
+  labs(title = "Scree Plot (Regla de Kaiser)")
 ```
 
 
