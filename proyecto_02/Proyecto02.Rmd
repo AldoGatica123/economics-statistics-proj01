@@ -7,9 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-library(readxl)
 library(psych)
-library(ggplot2)
 ```
 
 # Introducción
@@ -19,7 +17,7 @@ library(ggplot2)
 # Marco Teórico
 
 
-
+El análisis de componentes principales (PCA) es una técnica estadística utilizada para reducir la dimensionalidad de un conjunto de datos, identificando las variables más relevantes que explican la mayor parte de la variabilidad en los datos. Esta técnica es especialmente útil cuando se trabaja con conjuntos de datos grandes y complejos, ya que permite simplificar el análisis y facilitar la interpretación de los resultados.
 
 
 ## Variables
@@ -27,40 +25,19 @@ library(ggplot2)
 ```{r}
 # Carga de datos
 dataset <- read.csv("cancer_patients.csv")
-dataset.df <- data.frame(dataset)
-head(dataset.df)
+head(dataset)
 ```
-
-
-```{r,out,width="150", fig.align="center"}
-  knitr::include_graphics("./Variables_P2.jpeg")
-```
-
-
-## Correlación de variables
-
-```{r}
-round(cor(dataset.df),2)
-```
-
 
 
 # Analisis de Componenentes Principales
 
 ```{r}
 
-```
-
-```{r}
-scree(dataset.df, factors = TRUE)
+ACP <- princomp(dataset)
 ```
 
 ### Determinación de cantidad de componentes
 
-
-```{r}
-
-```
 
 # Conclusiones e interpretacion de resultados:
 
