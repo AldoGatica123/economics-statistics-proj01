@@ -14,7 +14,7 @@ library(factoextra)
 
 # Introducción
 
-
+El análisis de componentes principales (PCA) es una técnica estadística utilizada para reducir la dimensionalidad de un conjunto de datos, identificando las variables más relevantes que explican la mayor parte de la variabilidad en los datos. En este caso se aplicará el PCA a un conjunto de datos de cadenas de comida rápida en Estados Unidos, con el objetivo de identificar las variables más significativas que influyen en el rendimiento y crecimiento de estas cadenas. El análisis se centrará en la identificación de los componentes principales y su interpretación, así como en la visualización de los resultados a través de gráficos biplot y scree plot.
 
 # Marco Teórico
 
@@ -82,7 +82,7 @@ abline(v=0,col="blue")
 grid()
 ```
 
-Al evaluar los resultados de los dos componentes principales sin estandarizar 
+Al evaluar los resultados de los dos componentes principales sin estandarizar hace que la variable v02 que está en millones de dólares tenga peso mayor que las otras variables que están en miles de dólares. Por lo tanto, es recomendable estandarizar los datos para evitar que una variable tenga un peso desproporcionado en el análisis.
 
 ```{r}
 ACP.2 <- princomp(dataset, cor = TRUE)
@@ -95,8 +95,7 @@ abline(v=0,col="blue")
 grid()
 ```
 
-
-
+Después de estandarizar los datos, se observa que las variables tienen una varianza similar y el análisis de componentes principales es más equilibrado. En este caso, la variable v02 sigue siendo la más importante, pero su peso es menor en comparación con las otras variables.
 
 # Conclusiones e interpretacion de resultados:
 
