@@ -98,8 +98,13 @@ grid()
 
 # Conclusiones e interpretacion de resultados:
 
+El análisis de componentes principales (PCA) ha permitido identificar las variables más relevantes que explican la variabilidad en los datos de las cadenas de comida rápida en Estados Unidos. Los primeros dos componentes principales explican el 73% de la varianza total, lo que sugiere que estos son los más significativos para el análisis. El primer componente principal (PC1) representa la dimensión de escala operativa, mientras que el segundo componente principal (PC2) se relaciona con el rendimiento y crecimiento de las cadenas de comida rápida. Interpretando la grafica de biplot las cadenas que destacan en escala operativa (Comp 1) y alto rendimiento (Comp 2) son: Starbucks y McDonald's. Por otro lado, la cadenas que destacan en escala operativa pero bajo rendimiento es: Subway.
 
 ## Bibliografía
 
-- Dataset específico: Cancer Cases Report In all the World in las 10 Years. (2024). Recuperado de https://www.kaggle.com/datasets/zahidmughal2343/global-cancer-patients-2015-2024?resource=download.
+- Dataset específico: Top 50 Fast-Food Chains in USA (2021). Recuperado de https://www.kaggle.com/datasets/iamsouravbanerjee/top-50-fastfood-chains-in-usa.
+
+- Kabacoff, R. I. (2015). R in Action (2ª ed.). Manning Publications.
+
+
 
