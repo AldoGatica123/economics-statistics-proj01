@@ -64,8 +64,11 @@ rc
 round(unclass(rc$weights),2)
 ```
 
-PCI
-z=
+ACP
+Z1= 0.45V02 + 0.13V03 + 0.19V04 + 0.33V05 + 0.29V06 + 0.18V07
+Z2= 0.14V02 + 0.33V03 - 0.30V04 + 0.20V05 - 0.21V06 + 0.45V07
+
+Z1 es el primer componente principal, que representa la dimesion de escala operativa, la z02 explica la dimension de rendimiento y crecimiento de las cadenas de comida rapida en Estados Unidos. PC1 explica el 46% de la varianza y representa fundamentalmente el tamaño total de la operacion, por otra parte PC2 explica el 27% adicional de la varianza (73% acumulado).
 
 
 ```{r}
