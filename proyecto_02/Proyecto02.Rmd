@@ -34,7 +34,7 @@ head(dataset)
 
 
 ```{r,out,width="150", fig.align="center"}
-  knitr::include_graphics("./Variables_P2.png")
+  knitr::include_graphics("Variablep2.png")
 ```
 
 # Analisis de Componenentes Principales
