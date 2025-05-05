@@ -26,7 +26,9 @@ El análisis de componentes principales (PCA) es una técnica estadística utili
 
 ```{r}
 # Carga de datos
-dataset <- read.csv("cancer_patients.csv")
+dataset <- read.csv("fast_food.csv")
+rownames(dataset) <- dataset[,1]
+dataset <- dataset[,-1]
 head(dataset)
 ```
 
@@ -62,8 +64,8 @@ rc
 round(unclass(rc$weights),2)
 ```
 
-
-
+PCI
+z=
 
 
 ```{r}
