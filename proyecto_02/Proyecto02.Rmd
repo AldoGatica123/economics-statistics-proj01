@@ -72,20 +72,22 @@ Z1 es el primer componente principal, que representa la dimesion de escala opera
 
 
 ```{r}
-
 ACP.1 <- princomp(dataset)
-ACP.2 <- princomp(dataset, cor = TRUE)
-
 summary(ACP.1)
-summary(ACP.2)
-
 loadings(ACP.1)
-loadings(ACP.2)
 
 biplot(ACP.1)
 abline(h=0,col="blue")
 abline(v=0,col="blue")
 grid()
+```
+
+Al evaluar los resultados de los dos componentes principales sin estandarizar 
+
+```{r}
+ACP.2 <- princomp(dataset, cor = TRUE)
+summary(ACP.2)
+loadings(ACP.2)
 
 biplot(ACP.2)
 abline(h=0,col="blue")
