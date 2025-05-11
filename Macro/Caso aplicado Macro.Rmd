@@ -1,20 +1,25 @@
 ---
-title: "Caso aplicado macro"
-author: "Alyson Rosales"
+title: "Caso aplicado - Regímenes Cambiarios"
+author: "Alyson Rosales 1086622
+Aldo Gatica 1288813
+Keila Tercero 1038219"
 date: "2025-05-11"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(lmtest)
+library(ggplot2)
 ```
 
-# Regímenes cambiarios y tipo de cambio en Guatemala
-
+# 1. Gráfica de evaluación de los regímenes cambiarios
 
 ```{r,out,width="150", fig.align="center"}
-  knitr::include_graphics("Picture1.png")
+knitr::include_graphics("Picture1.png")
 ```
+
+# 2. Explicación de los Regímenes Cambiarios
 
 ## Registros extraídos de la década de 1980´s
 
@@ -34,3 +39,33 @@ A diferencia de los regímenes de tipo de cambio fijo o flotación libre, el esq
 
 Este enfoque ha sido clave para mantener la confianza de los inversionistas y facilitar el crecimiento del comercio exterior. No obstante, también ha generado debates sobre la posible sobrevaloración del tipo de cambio real y su impacto sobre la competitividad de las exportaciones.
 
+# 3.Modelo Econométrico 
+
+```{r}
+# carga de datos csv
+data <- read.csv("gt_exchange_rate.csv", sep=",", header=TRUE)
+head(data)
+```
+
+
+```{r}
+# Modelo de regresión lineal múltiple
+modelo_completo <- lm(Exchange_Rate ~ Inflation + Real_GDP + GT_Interest_Rate +
+                      USA_Interest_Rate + Trade_Balance, data = data)
+
+# Modelo simplificado final
+modelo_final <- lm(Exchange_Rate ~ Inflation + USA_Interest_Rate, data = data)
+
+# Comparación
+summary(modelo_completo)
+summary(modelo_final)
+```
+
+## Interpretación de Resultados
+
+Se decidió utilizar el modelo simplificado final, ya que tiene un menor número de variables y un R cuadrado ajustado similar al del modelo completo. Esto sugiere que el modelo simplificado es más parsimonioso y aún captura la variabilidad en la tasa de cambio.  
+
+El modelo final incluye las variables Inflación y Tasa de Interés de EE.UU. como predictores significativos de la tasa de cambio. La variable Trade Balance no fue incluida en el modelo final, ya que su p-valor es mayor a 0.05, lo que indica que no es significativa.
+
+### Predicción de la Tasa de Cambio
+$Tipo Cambio = 9.48594 - 0.06757*Inflación - 0.35809*Tasa USA$
