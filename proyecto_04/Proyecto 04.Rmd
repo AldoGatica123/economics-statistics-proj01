@@ -7,6 +7,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(fpc)
+library(factoextra)
+library(igraph)
+library(foreign)
 ```
 
 
@@ -18,5 +22,62 @@ head(dataset)
 
 
 
+```{r}
+# anlisis de clusters
+data <- data.frame(dataset)
+rownames(data) <- dataset$name
+data <- data[,-1]
+data
+
+
+# Distancias de idh
+data.d <- dist(data)
+
+# Cluster de tipo jerarquico
+data.h <- hclust(data.d,method="complete")
+data.h
+```
+
+
+
+```{r}
+# Dendgrama Simple
+plot(data.h, cex = 0.6)
+
+# Dendograma y otras opciones graficas
+den1 <- fviz_dend(x = data.h, cex = 0.75, main = "Dendrograma", xlab = "observaciones", ylab = "distancia", sub = "",horiz = TRUE)
+den1
+
+den2 <- fviz_dend(x = data.h, k = 6, k_colors = c("#2E9FDF", "#00AFBB", "#E7B800", "#FC4E07"), color_labels_by_k = TRUE, cex = 0.8, type = "phylogenic", repel = TRUE)
+den2
+
+den2 <- fviz_dend(x = data.h, cex = 0.8, type = "phylogenic", repel = TRUE)
+den2
+```
+
+
+```{r}
+# Cluster de tipo no jerarquico
+data.k <- kmeans(data,8)
+data.k 
+
+# cluster: Asignacion a cada cluster.
+# centers: Matriz de centroides.
+# size: El numero de puntos en cada cluster.
+
+fviz_cluster(data.k, data = data,labelsize = 7)
+
+## Se copia la tabla original y se asingan los clusters
+data.r <- data
+data.r$C <- data.k$cluster
+head(data.r)
+
+cluster2 <- subset(data.r, subset = data.r$C==2)
+rownames(cluster2)
+
+# Distancias
+data.d2 <- dist(cluster2)
+head(round(data.d2,2))
+```
 
 
