@@ -1,5 +1,22 @@
 ---
-title: "Proyecto 04"
+title: "Proyecto 4 - Analisis de clusters"
+author: "Aldo Gatica 1288813 - Alyson Rosales 1086622"
+date: "2025-05-11"
 output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+# Carga de datos
+dataset <- read.csv("MXmuseum2024.csv", sep = ",", header = TRUE)
+head(dataset)
+```
+
+
+
+
 
