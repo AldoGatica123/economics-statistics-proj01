@@ -18,17 +18,12 @@ library(foreign)
 # Carga de datos
 dataset <- read.csv("MXmuseum2024.csv", sep = ",", header = TRUE)
 head(dataset)
-```
 
-
-
-```{r}
-# anlisis de clusters
+# Limpiar datos
 data <- data.frame(dataset)
 rownames(data) <- dataset$name
 data <- data[,-1]
 data
-
 
 # Distancias de idh
 data.d <- dist(data)
@@ -37,7 +32,6 @@ data.d <- dist(data)
 data.h <- hclust(data.d,method="complete")
 data.h
 ```
-
 
 
 ```{r}
@@ -55,10 +49,32 @@ den2 <- fviz_dend(x = data.h, cex = 0.8, type = "phylogenic", repel = TRUE)
 den2
 ```
 
+## Interpretación del análisis de clusters jerárquicos
+Debido a la gran cantidad de variables, el dendrograma no es muy claro. Sin embargo, se puede observar que los primeros 4 clusters son bastante homogéneos, mientras que los últimos 2 son más heterogéneos. Esto sugiere que los primeros 4 clusters podrían representar grupos de museos con características similares, mientras que los últimos 2 podrían incluir museos con características más diversas. Los más populares es clúster 1, Museo Nacional de Antropología e Historia.
+
+```{r}
+# Suponiendo que 'datos' es tu dataframe (solo variables numéricas)
+wcss <- numeric(10)  # Probamos k=1 a 10
+for (k in 1:10) {
+  kmeans_model <- kmeans(data, centers = k, nstart = 25)  # nstart para evitar mínimos locales
+  wcss[k] <- kmeans_model$tot.withinss  # WCSS
+}
+
+# Gráfico del codo
+ggplot(data.frame(k = 1:10, WCSS = wcss), aes(x = k, y = WCSS)) +
+  geom_line(color = "red", size = 1.5) +
+  geom_point(color = "darkred", size = 3) +
+  labs(title = "Método del Codo", x = "Número de clusters (k)", y = "WCSS") +
+  theme_minimal()
+```
+
+## Interpretación del gráfico del codo
+
+Lo que indica el gráfico del codo es que el número óptimo de clusters parece ser 2, ya que después de ese punto la disminución en WCSS es menos pronunciada. Esto sugiere que agregar más clusters no mejora significativamente la calidad del agrupamiento.
 
 ```{r}
 # Cluster de tipo no jerarquico
-data.k <- kmeans(data,8)
+data.k <- kmeans(data,2)
 data.k 
 
 # cluster: Asignacion a cada cluster.
@@ -79,5 +95,9 @@ rownames(cluster2)
 data.d2 <- dist(cluster2)
 head(round(data.d2,2))
 ```
+
+## Interpretación del análisis de clusters no jerárquicos
+
+El análisis de clusters no jerárquicos sugiere que los museos en el clúster 2 son más diversos en términos de sus características. Esto podría indicar que estos museos tienen una variedad de exposiciones o enfoques temáticos, lo que los hace únicos en comparación con los museos en el clúster 1.
 
 
