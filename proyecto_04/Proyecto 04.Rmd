@@ -33,6 +33,7 @@ data.h <- hclust(data.d,method="complete")
 data.h
 ```
 
+# Análisis de Clusters Jerárquico
 
 ```{r}
 # Dendgrama Simple
@@ -51,6 +52,9 @@ den2
 
 ## Interpretación del análisis de clusters jerárquicos
 Debido a la gran cantidad de variables, el dendrograma no es muy claro. Sin embargo, se puede observar que los primeros 4 clusters son bastante homogéneos, mientras que los últimos 2 son más heterogéneos. Esto sugiere que los primeros 4 clusters podrían representar grupos de museos con características similares, mientras que los últimos 2 podrían incluir museos con características más diversas. Los más populares es clúster 1, Museo Nacional de Antropología e Historia.
+
+
+# Análisis de Clusters No Jerárquico
 
 ```{r}
 # Suponiendo que 'datos' es tu dataframe (solo variables numéricas)
@@ -96,8 +100,15 @@ data.d2 <- dist(cluster2)
 head(round(data.d2,2))
 ```
 
-## Interpretación del análisis de clusters no jerárquicos
 
+# Conclusión e Interpretación de resultados
+
+El análisis de clusters jerárquicos y no jerárquicos proporciona una visión valiosa sobre la popularidad de los museos en México. Los resultados sugieren que hay dos grupos de museos con características similares, el primer grupo que contiene al Museo Nacional de Antropología y al de Historia, y el segundo grupo que incluye museos más diversos. Estos hallazgos pueden ser útiles para los responsables de la toma de decisiones en el ámbito cultural y turístico, así como para los investigadores interesados en la dinámica de los museos en México.   
 El análisis de clusters no jerárquicos sugiere que los museos en el clúster 2 son más diversos en términos de sus características. Esto podría indicar que estos museos tienen una variedad de exposiciones o enfoques temáticos, lo que los hace únicos en comparación con los museos en el clúster 1.
 
 
+## Bibliografía
+
+- Secretaría de Turismo [SECTUR]. (s. f.). Actividades Culturales. DATATUR - Sistema de Información Estadística del Turismo en México. https://www.datatur.sectur.gob.mx/SitePages/ActividadesCulturales.aspx
+
+- Dataset específico: Turismo Mx Set. (2024). Recuperado de  https://www.datatur.sectur.gob.mx/Documentos%20compartidos/CUADRO_INAH.zip.
