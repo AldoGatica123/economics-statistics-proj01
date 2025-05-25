@@ -1,0 +1,25 @@
+---
+title: "Repaso Final"
+author: "Alyson Rosales 1086622"
+date: "2025-05-24"
+output: html_document
+---
+
+# Repaso Probailidades 
+
+
+## Capitulo 4
+
+
+## Capitulo 21
+
+
+
+## Ejercicios
+
+### 4.10 - EXPERIMENTOS, REGLAS DE CONTEO Y ASIGNACIÓN DE PROBABILIDADES 
+
+
+
+### 4.
+
