@@ -218,6 +218,10 @@ probabilidades_retraso
 
 a) Dado que un cliente no realizó uno o más pagos mensuales, calcule la probabilidad posterior de que no cumpla con el pago.
 
+Dado que un cliente no realizó uno o más pagos mensuales, la probabilidad posterior de que no cumpla con el pago se puede calcular usando el teorema de Bayes: 0.2083
+
 b) Al banco le gustaría retirar su tarjeta si la probabilidad de que el cliente no cumpla con el pago es mayor que 0.20. ¿El banco debe retirar la tarjeta si el cliente no hace un pago mensual? ¿Por qué?
+
+**Sí, el banco debe retirar la tarjeta si el cliente no hace un pago mensual, ya que la probabilidad posterior de que el cliente no cumpla con el pago es de 0.2083, que es mayor que 0.20.**
 
 
