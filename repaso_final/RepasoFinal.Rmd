@@ -15,11 +15,209 @@ output: html_document
 
 
 
-## Ejercicios
+# Ejercicios
 
 ### 4.10 - EXPERIMENTOS, REGLAS DE CONTEO Y ASIGNACIÓN DE PROBABILIDADES 
+En Estados Unidos, muchos estudiantes han acumulado una deuda cuando se gradúan de la universidad. En la tabla siguiente se muestra el porcentaje de graduados que al terminar han acumulado una deuda y el monto medio de ésta para los estudiantes de cuatro universidades y cuatro colegios de arte (U.S. News and World Report, America’s Best Colleges, 2008).
+
+```{r echo=FALSE}
+universidades <- data.frame(
+  Institucion = c("Pace", "Iowa State", "Massachusetts", "SUNY-Albany"),
+  Tipo = "Universidad",
+  Porcentaje_con_deuda = c(72, 69, 55, 64),
+  Monto = c(32980, 32130, 11227, 11856)
+)
+colegios <- data.frame(
+  Institucion = c("Wartburg", "Morehouse", "Wellesley", "Wofford"),
+  Tipo = "Colegio",
+  Porcentaje_con_deuda = c(83, 94, 55, 49),
+  Monto = c(28758, 27000, 10206, 11012)
+)
+instituciones <- rbind(universidades, colegios)
+
+print(instituciones)
+```
 
 
+a) Si usted elige al azar a un graduado de Morehouse College, ¿cuál es la probabilidad de que este estudiante se haya graduado con una deuda?
 
-### 4.
+**Un estudiante elegido al azar de Morehouse Collegue tiene un probabilidad de graduarse con deuda de 94%.**
+
+b) Si escoge una de estas ocho instituciones para un estudio de seguimiento sobre los préstamos a estudiantes, ¿cuál es la probabilidad de que considere una institución que tenga más de 60% graduados con deuda?
+
+**5/8 = 0.625**  
+**El porcentaje es de 62.5%**
+
+c) Si usted elige una de estas ocho instituciones para un estudio de seguimiento sobre los préstamos a estudiantes, ¿cuál es la probabilidad de que escoja una institución donde la deuda media de los graduados endeudados sea de más de $30,000?
+
+**2/8 = 0.25**  
+**El porcentaje es de 25%**
+
+d) ¿Cuál es la probabilidad de que un graduado de Pace University no tenga deuda?
+
+**1 - 0.72 = 0.28**  
+**El porcentaje es de 28%**
+
+e) Para los graduados de Pace University con deuda, el monto medio de ésta es de $32,980. Considerando a todos los graduados de dicha universidad, ¿cuál es la deuda media por sujeto?
+
+**0.72 x 32980 + 0.28 x 0 = 23745.6**  
+**La deuda media es de 23745.6** 
+
+
+## 4.17 - EVENTOS Y SUS PROBABILIDADES 
+
+Revise los puntos de la muestra de KP&L y las probabilidades de los puntos de la muestra de las tablas 4.2 y 4.3.
+
+```{r echo=FALSE}
+tabla_4_2 <- data.frame(
+  Etapa1_Diseno = c(2, 2, 2, 3, 3, 3, 4, 4, 4),
+  Etapa2_Construccion = c(6, 7, 8, 6, 7, 8, 6, 7, 8),
+  Punto_Muestreo = c("(2, 6)", "(2, 7)", "(2, 8)", "(3, 6)", "(3, 7)", "(3, 8)", "(4, 6)", "(4, 7)", "(4, 8)"),
+  Frecuencia = c(6, 6, 2, 4, 8, 2, 2, 4, 6)
+)
+
+tabla_4_3 <- data.frame(
+  Punto_Muestreo = c("(2, 6)", "(2, 7)", "(2, 8)", "(3, 6)", "(3, 7)", "(3, 8)", "(4, 6)", "(4, 7)", "(4, 8)"),
+  Duracion_Proyecto = c(8, 9, 10, 9, 10, 11, 10, 11, 12),
+  Probabilidad = c(0.15, 0.15, 0.05, 0.10, 0.20, 0.05, 0.05, 0.10, 0.15)
+)
+print(tabla_4_2)
+
+print(tabla_4_3)
+```
+
+
+a) La etapa de diseño (etapa 1) rebasará el presupuesto si tarda 4 meses en completarse. Elabore una lista de los puntos de la muestra en el evento de que la etapa de diseño sobrepase el presupuesto.
+
+**Los puntos de muestreo que sobrepasan los 4 meses de diseño son los siguientes**
+
+```{r echo=FALSE}
+tabla_respuesta_4.17 <- data.frame(
+  Punto_Muestreo = c("(4, 6)", "(4, 7)", "(4, 8)"),
+  Probabilidad = c(0.05, 0.10, 0.15)
+)
+tabla_respuesta_4.17
+```
+
+
+b) ¿Cuál es la probabilidad de que la etapa de diseño rebase el presupuesto?
+
+**La probabilidad de que la etapa de diseño sobrepase el presupuesto es de 30%**
+
+c) La etapa de construcción (etapa 2) rebasará el gasto presupuestado si tarda 8 meses en completarse. Elabore una lista de los puntos de la muestra en el evento de que la etapa de construcción sobrepase el presupuesto.
+
+**Los puntos de muestreo que sobrepasan los 8 meses de construcción son los siguientes**
+
+```{r echo=FALSE}
+tabla_respuesta_4.17_2 <- data.frame(
+  Punto_Muestreo = c("(2, 8)", "(3, 8)", "(4, 8)"),
+  Probabilidad = c(0.05, 0.05, 0.15)
+)
+tabla_respuesta_4.17_2
+```
+
+d) ¿Cuál es la probabilidad de que la fase de construcción rebase el presupuesto?
+
+**La probabilidad de que la etapa de construcción sobrepase el presupuesto es de 25%**
+
+e) ¿Cuál es la probabilidad de que ambas etapas lo sobrepasen?
+
+**0.05 + 0.05 + 0.05 + 0.10 + 0.15 = 0.40**
+**La probabilidad de que ambas etapas sobrepasen el presupuesto es de 40%**
+
+## 4.28 - ALGUNAS RELACIONES BÁSICAS DE PROBABILIDAD 
+
+Una encuesta de suscriptores a una revista reveló que 45.8% rentó un automóvil durante los 12 meses anteriores por razones de trabajo, 54% lo rentó en el mismo período por razones personales y 30% tanto por razones de trabajo como personales.
+
+```{r echo=FALSE}
+suscriptores <- data.frame(
+  Razones = c("Trabajo", "Personales", "Ambas"),
+  Porcentaje = c(0.458, 0.54, 0.30)
+)
+suscriptores
+```
+
+a) ¿Cuál es la probabilidad de que un suscriptor rentara un automóvil durante los 12 meses anteriores por razones de trabajo o personales?
+
+**La probabilidad de que un suscriptor rentara un automóvil por razones de trabajo o personales es de 0.458 + 0.54 - 0.30 = 0.698**
+
+b) ¿Cuál es la probabilidad de que un suscriptor no rentara un automóvil durante el período de referencia por razones de trabajo o personales?
+
+**La probabilidad de que un suscriptor no rentara un automóvil por razones de trabajo o personales es de 1 - 0.458 - 0.54 = 0.002**
+
+## 4.33 - PROBABILIDAD CONDICIONAL
+
+En una encuesta de estudiantes de maestría se obtuvieron los datos siguientes sobre la primera razón de los “estudiantes para solicitar el ingreso en la escuela en que se matricularon”.
+
+```{r echo=FALSE}
+tabla_respuesta_4.33 <- data.frame(
+  Estado = c("Tiempo completo", "Tiempo parcial", "Totales"),
+  Calidad = c(421, 400, 821),
+  Costo_Conveniencia = c(393, 593, 986),
+  Otros = c(76, 46, 122),
+  Totales = c(890, 1039, 1929)
+)
+tabla_respuesta_4.33
+```
+
+a) Elabore una tabla de probabilidad conjunta para estos datos.
+
+**La tabla de probabilidad conjunta es la siguiente:**
+```{r echo=FALSE}
+tabla_probabilidad_conjunta <- data.frame(
+  Estado = c("Tiempo completo", "Tiempo parcial"),
+  Calidad = c(421/1929, 400/1929),
+  Costo_Conveniencia = c(393/1929, 593/1929),
+  Otros = c(76/1929, 46/1929)
+)
+tabla_probabilidad_conjunta
+```
+
+b) Use las probabilidades marginales de la calidad de la escuela, el costo o la conveniencia de la escuela y otros para comentar la razón más importante para elegirla.
+
+```{r echo=FALSE}
+tabla_probabilidad_marginal <- data.frame(
+  Razones = c("Calidad", "Costo o conveniencia", "Otros"),
+  Probabilidad = c(821/1929, 986/1929, 122/1929)
+)
+tabla_probabilidad_marginal
+```
+
+**La razón más importante para elegir una escuela es el costo o la conveniencia, con una probabilidad de 51.1%**
+
+c) Si un estudiante es de tiempo completo, ¿cuál es la probabilidad de que la calidad sea la primera razón para elegir una escuela?
+
+**La probabilidad de que un estudiante de tiempo completo elija la calidad como la primera razón es de 421/1929 = 0.2182 o 21.81%**
+
+d) Si es de tiempo parcial, ¿cuál es la probabilidad de que la calidad sea la primera razón para elegir una escuela?
+
+**La probabilidad de que un estudiante de tiempo parcial elija la calidad como la primera razón es de 400/1929 = 0.2071 o 20.71%**
+
+e) Sea A el evento de que un estudiante asiste de tiempo completo y B el evento de que lista la calidad de la escuela como la primera razón para solicitar el ingreso. ¿Los eventos A y B son independientes? Justifique su respuesta.
+
+**Los eventos A y B no son independientes, ya que la probabilidad de que un estudiante asista de tiempo completo y elija la calidad como la primera razón es diferente de la probabilidad de que un estudiante asista de tiempo completo. Tienen 890/1929=0.4614 o 46.14% de probabilidad de asistir a tiempo completo y para que la calidad sea la primera razón es de 821/1929=0.4256 o 42.56%. Por lo tanto, no son independientes.**
+
+## 4.42 - TEOREMA DE BAYES
+
+Un banco local revisó su política de tarjetas de crédito con la intención de cancelar algunas tarjetas. En el pasado, aproximadamente 5% de los tarjetahabientes no cumplió con sus pagos, por lo que el banco no pudo cobrar los estados de cuenta pendientes. Por tanto, la gerencia estableció una probabilidad previa de 0.05 de que cualquier tarjetahabiente en particular no pague. El banco calculó también que la probabilidad de retraso en el pago mensual era de 0.20 para aquellos clientes que sí pagaban. Desde luego, la probabilidad de retrasarse en un pago mensual para aquellos que no pagaron es 1.
+
+```{r echo=FALSE}
+probabilidades <- data.frame(
+  Evento = c("No paga", "Paga"),
+  Probabilidad = c(0.05, 0.95)
+)
+probabilidades_retraso <- data.frame(
+  Evento = c("Retraso", "No Retraso"),
+  Paga = c(0.20, 0.80),
+  No_Paga = c(1, 0)
+)
+probabilidades
+probabilidades_retraso
+
+```
+
+a) Dado que un cliente no realizó uno o más pagos mensuales, calcule la probabilidad posterior de que no cumpla con el pago.
+
+b) Al banco le gustaría retirar su tarjeta si la probabilidad de que el cliente no cumpla con el pago es mayor que 0.20. ¿El banco debe retirar la tarjeta si el cliente no hace un pago mensual? ¿Por qué?
+
 
