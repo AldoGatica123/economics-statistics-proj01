@@ -218,10 +218,100 @@ probabilidades_retraso
 
 a) Dado que un cliente no realizó uno o más pagos mensuales, calcule la probabilidad posterior de que no cumpla con el pago.
 
-Dado que un cliente no realizó uno o más pagos mensuales, la probabilidad posterior de que no cumpla con el pago se puede calcular usando el teorema de Bayes: 0.2083
+**Dado que un cliente no realizó uno o más pagos mensuales, la probabilidad posterior de que no cumpla con el pago se puede calcular usando el teorema de Bayes: 0.2083**
 
 b) Al banco le gustaría retirar su tarjeta si la probabilidad de que el cliente no cumpla con el pago es mayor que 0.20. ¿El banco debe retirar la tarjeta si el cliente no hace un pago mensual? ¿Por qué?
 
 **Sí, el banco debe retirar la tarjeta si el cliente no hace un pago mensual, ya que la probabilidad posterior de que el cliente no cumpla con el pago es de 0.2083, que es mayor que 0.20.**
+
+
+## 21.3 - TOMA DE DECISIONES CON PROBABILIDADES
+
+Hudson Corporation está considerando tres opciones para el manejo de sus operaciones de procesamiento de datos: continuar con su personal, contratar a un proveedor externo para realizar la gestión (lo que se conoce como un reclutador externo) o utilizar una combinación de su personal y un proveedor externo. El costo de la operación depende de la demanda futura. El costo anual de cada opción (en miles de dólares) depende de la demanda de la siguiente forma.
+
+```{r echo=FALSE}
+costos <- data.frame(
+  Opciones_personal = c("Personal propio", "Empresa externa", "Combinación"),
+  Alta = c(650, 900, 800),
+  Media = c(650, 600, 650),
+  Baja = c(600, 300, 500)
+)
+costos
+probalidades_costo <- c(0.2, 0.5, 0.3)
+```
+
+a) Si las probabilidades para la demanda son 0.2, 0.5 y 0.3, respectivamente, ¿qué alternativa de decisión minimizará el costo esperado de operación del procesamiento de datos? ¿Cuál es el costo anual esperado de su recomendación?
+
+```{r echo=FALSE}
+costo_esperado <- data.frame(
+  Opciones = c("Personal propio", "Empresa externa", "Combinación"),
+  Costo_Esp = c(650 * 0.2 + 650 * 0.5 + 600 * 0.3, 
+                900 * 0.2 + 600 * 0.5 + 300 * 0.3, 
+                800 * 0.2 + 650 * 0.5 + 500 * 0.3)
+)
+costo_esperado
+```
+
+**La alternativa de decisión que minimizará el costo esperado de operación del procesamiento de datos es la empresa externa, con un costo anual esperado de 570,000 dólares**
+
+b) ¿Cuál es el valor esperado de una información perfecta?
+
+```{r echo=FALSE}
+valor_esperado_sin_ip <- data.frame(
+  Opciones = c("Personal propio", "Empresa externa", "Combinación"),
+  Costo_Esp = c(650 * 0.2 + 650 * 0.5 + 600 * 0.3, 
+                900 * 0.2 + 600 * 0.5 + 300 * 0.3, 
+                800 * 0.2 + 650 * 0.5 + 500 * 0.3)
+)
+
+valor_esperado_con_ip <- data.frame(
+  Opciones = c("Alta", "Media", "Baja"),
+  Costo_Esp = c(650 * 0.2, 
+                600 * 0.5, 
+                300 * 0.3)
+)
+VEIP <- abs(min(valor_esperado_sin_ip$Costo_Esp) - sum(valor_esperado_con_ip$Costo_Esp))
+VEIP
+```
+**El valor esperado de una información perfecta es de 50, lo que quiere decir es que la empresa debe pagar 50,000 dólares por información perfecta para tomar la mejor decisión.**
+
+## 21.8 - ANÁLISIS DE DECISIONES CON INFORMACIÓN MUESTRAL
+
+Considere una variación del árbol de decisión de PDC de la figura 21.5. La empresa debe primero decidir si lleva a cabo el estudio de investigación de mercados. Si dicho estudio se realiza, los resultados pueden ser favorables
+(F) o desfavorables (U). Suponga que existen sólo dos alternativas de decisión d1 y d2, y dos estados de la naturaleza s1 y s2.
+
+```{r echo=FALSE}
+markets_data <- data.frame(
+  Decisiones = c("d1", "d2"),
+  Estado_s1 = c(100, 400),
+  Estado_s2 = c(300, 200)
+)
+markets_data
+```
+
+
+
+a) Muestre el árbol de decisión.
+
+
+b) Utilice las siguientes probabilidades. ¿Cuál es la estrategia de decisión óptima?
+```{r echo=FALSE}
+probabilidades_df <- data.frame(
+  Probabilidad = c("P(F)", "P(U)", 
+                  "P(s1|F)", "P(s2|F)", 
+                  "P(s1|U)", "P(s2|U)",
+                  "P(s1)", "P(s2)"),
+  Valor = c(0.56, 0.44, 
+           0.57, 0.43,
+           0.18, 0.82,
+           0.40, 0.60)
+)
+probabilidades_df
+```
+
+
+
+
+## 21.14 - CÁLCULO DE PROBABILIDADES MEDIANTE EL TEOREMA DE BAYES
 
 
